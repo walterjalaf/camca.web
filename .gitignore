@@ -1,0 +1,26 @@
+# build output
+dist/
+.astro/
+
+# lighthouse reports
+lh-*.json
+
+# dependencies
+node_modules/
+
+# logs
+*.log
+npm-debug.log*
+
+# environment
+.env
+.env.production
+.env.*.local
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/settings.json
+.idea/

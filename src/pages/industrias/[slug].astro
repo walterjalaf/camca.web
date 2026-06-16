@@ -1,0 +1,143 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import LogoGrid from '@components/LogoGrid.astro';
+import FaqAccordion from '@components/FaqAccordion.astro';
+import CtaBanner from '@components/CtaBanner.astro';
+import { INDUSTRIAS } from '@data/industrias';
+import { clientesByVertical } from '@data/clientes';
+import { SITE, waLink } from '@data/site';
+
+export function getStaticPaths() {
+  return INDUSTRIAS.map((ind) => ({ params: { slug: ind.slug }, props: { ind } }));
+}
+
+const { ind } = Astro.props;
+const clientes = clientesByVertical(ind.slug);
+const conLogo = clientes.filter((c) => c.logo);
+const path = `/industrias/${ind.slug}`;
+const logosOrdenados = [...conLogo, ...clientes.filter((c) => !c.logo)];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Industrias', item: `${SITE.url}/industrias/${ind.slug}` },
+    { '@type': 'ListItem', position: 3, name: ind.name, item: `${SITE.url}${path}` },
+  ],
+};
+const service = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: `Outsourcing administrativo y contable para ${ind.name}`,
+  provider: { '@id': `${SITE.url}/#organization` },
+  areaServed: [{ '@type': 'City', name: 'San Juan' }, { '@type': 'Country', name: 'Argentina' }],
+  description: ind.seoDescription,
+};
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: ind.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout title={ind.seoTitle} description={ind.seoDescription} path={path} jsonLd={[breadcrumb, service, faqLd]}>
+  <PageHero
+    eyebrow={ind.heroEyebrow}
+    title={ind.heroTitle}
+    lead={ind.heroLead}
+    image={`/fotos/industrias/${ind.slug}.webp`}
+    imageAlt={`CIAF acompañando a empresas de ${ind.name.toLowerCase()}`}
+    ctas={[
+      { label: 'Hablar de mi operación', href: waLink(`Hola CIAF, tengo una empresa de ${ind.name.toLowerCase()} y quiero asesorarme`), external: true },
+      { label: 'Ver servicios', href: '/servicios', variant: 'ghost' },
+    ]}
+  />
+
+  <!-- Lo que resolvemos -->
+  <section class="section">
+    <div class="container">
+      <span class="ribbon reveal">Lo que resolvemos</span>
+      <h2 class="h2 reveal" style="margin-top: var(--space-md); max-width: 24ch;">Los dolores de tu rubro, atendidos uno por uno.</h2>
+      <div class="dolores">
+        {ind.dolores.map((d, i) => (
+          <article class="dolor-card reveal" data-delay={(i % 3) as 0 | 1 | 2}>
+            <span class="dolor-num">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="dolor-title">{d.title}</h3>
+              <p class="dolor-desc">{d.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios priorizados -->
+  <section class="section">
+    <div class="container">
+      <span class="ribbon reveal">Para este rubro priorizamos</span>
+      <h2 class="h2 reveal" style="margin-top: var(--space-md); max-width: 22ch;">Los servicios que mueven la aguja.</h2>
+      <ul class="prio-list reveal" data-delay="1">
+        {ind.prioridades.map((p) => (
+          <li><span class="prio-arrow" aria-hidden="true">→</span><span>{p}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Confían en nosotros -->
+  {logosOrdenados.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <span class="ribbon reveal">Empresas que confían</span>
+        <h2 class="h2 reveal" style="margin: var(--space-md) 0 var(--space-lg); max-width: 20ch;">{ind.name} que elige CIAF.</h2>
+        <LogoGrid clientes={logosOrdenados} />
+      </div>
+    </section>
+  )}
+
+  <!-- Mini-caso -->
+  <section class="section">
+    <div class="container">
+      <article class="caso reveal">
+        <span class="eyebrow caso-label">// {ind.caso.label}</span>
+        <h2 class="h2 caso-title">{ind.caso.title}</h2>
+        <p class="caso-body">{ind.caso.body}</p>
+        <!-- TESTIMONIO PENDIENTE DE APROBACIÓN -->
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container faq-wrap">
+      <span class="ribbon reveal">Preguntas frecuentes</span>
+      <h2 class="h2 reveal" style="margin: var(--space-md) 0 var(--space-lg);">Lo que solés preguntarnos.</h2>
+      <FaqAccordion faqs={ind.faqs} />
+    </div>
+  </section>
+
+  <CtaBanner title={`¿Hablamos sobre tu empresa de ${ind.name.toLowerCase()}?`} />
+</BaseLayout>
+
+<style>
+  .dolores { margin-top: var(--space-lg); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+  .dolor-card { display: flex; gap: var(--space-md); background: linear-gradient(180deg, rgba(30,74,130,0.10), rgba(30,74,130,0)); border: 1px solid var(--line); padding: clamp(20px, 3vw, 30px); }
+  .dolor-num { font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; color: var(--gold); flex-shrink: 0; }
+  .dolor-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: 18px; color: #fff; margin-bottom: 6px; }
+  .dolor-desc { color: var(--ciaf-on-navy-60); font-size: 15px; }
+  @media (max-width: 760px) { .dolores { grid-template-columns: 1fr; } }
+
+  .prio-list { margin-top: var(--space-lg); display: grid; grid-template-columns: 1fr 1fr; gap: 14px var(--space-lg); max-width: 920px; }
+  .prio-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 17px; color: var(--ciaf-on-navy-80); }
+  .prio-arrow { color: var(--gold); flex-shrink: 0; }
+  @media (max-width: 600px) { .prio-list { grid-template-columns: 1fr; } }
+
+  .caso { background: linear-gradient(180deg, rgba(30,74,130,0.32), rgba(14,31,51,0.5)); border: 1px solid var(--line-strong); padding: clamp(28px, 5vw, 64px); max-width: 920px; }
+  .caso-label { color: var(--gold); }
+  .caso-title { margin: var(--space-md) 0; max-width: 22ch; }
+  .caso-body { color: var(--ciaf-on-navy-80); font-size: clamp(16px, 1.5vw, 20px); line-height: 1.6; max-width: 70ch; }
+
+  .faq-wrap { max-width: 900px; }
+</style>

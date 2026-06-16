@@ -1,0 +1,40 @@
+---
+import type { Area } from '@data/servicios';
+interface Props {
+  area: Area;
+  index: number;
+}
+const { area, index } = Astro.props;
+const num = String(index + 1).padStart(2, '0');
+---
+<article id={area.id} class="svc-block reveal">
+  <div class="svc-head">
+    <span class="svc-num">{num}</span>
+    <div>
+      <h3 class="svc-title">{area.title}</h3>
+      <p class="svc-tagline">{area.tagline}</p>
+    </div>
+  </div>
+  <p class="svc-intro muted">{area.intro}</p>
+  <ul class="svc-list">
+    {area.items.map((it) => (
+      <li>
+        <span class="svc-bullet" aria-hidden="true">→</span>
+        <span>{it}</span>
+      </li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  .svc-block { background: linear-gradient(180deg, rgba(30,74,130,0.10), rgba(30,74,130,0)); border: 1px solid var(--line); padding: clamp(24px, 4vw, 48px); scroll-margin-top: calc(var(--nav-h) + 24px); }
+  .svc-head { display: flex; gap: var(--space-md); align-items: flex-start; }
+  .svc-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 5vw, 64px); line-height: 0.9; color: var(--gold); }
+  .svc-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(22px, 2.6vw, 30px); color: #fff; }
+  .svc-tagline { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-2); margin-top: 6px; }
+  .svc-intro { margin-top: var(--space-md); max-width: 72ch; }
+  .svc-list { margin-top: var(--space-md); display: grid; grid-template-columns: 1fr 1fr; gap: 12px var(--space-md); }
+  .svc-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--ciaf-on-navy-80); }
+  .svc-bullet { color: var(--ciaf-on-navy-55); flex-shrink: 0; }
+  @media (max-width: 720px) { .svc-list { grid-template-columns: 1fr; } }
+</style>

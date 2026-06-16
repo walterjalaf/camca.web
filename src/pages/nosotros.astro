@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/PageHero.astro';
+import CtaBanner from '@components/CtaBanner.astro';
+import { SITE, waLink } from '@data/site';
+import { iconSvg } from '@data/icons';
+
+const MISION =
+  'Somos una consultora integral que ofrece soluciones personalizadas, comprometida en ser el aliado estratégico de cada uno de nuestros clientes. Brindamos servicios de alto nivel profesional en las áreas de contabilidad, impuestos, administración y finanzas, proporcionando soluciones concretas a sus necesidades y acompañándolos en su crecimiento y desarrollo empresarial.';
+const VISION =
+  'Consolidarnos como la consultora líder y de referencia en nuestro sector y a nivel nacional, reconocida por la excelencia en nuestros servicios, la cercanía con nuestros clientes y nuestro impacto positivo en su crecimiento empresarial. Aspiramos a ser un modelo de confianza, innovación y profesionalismo, marcando la diferencia en cada solución que ofrecemos.';
+
+const RAZONES = [
+  { icon: 'workflow', title: 'Conocimiento del entorno argentino', desc: 'ARCA, Ingresos Brutos, normativa laboral y un contexto cambiante. Nos movemos en ese terreno todos los días.' },
+  { icon: 'people', title: 'Personal embebido en tu operación', desc: 'No recibimos papeles a fin de mes: generamos la información desde adentro, como un equipo propio.' },
+  { icon: 'chip', title: 'Stack tecnológico probado', desc: 'Operamos sobre 19 sistemas del mercado y te ayudamos a elegir e implementar el correcto.' },
+  { icon: 'layers', title: 'Trayectoria multi-industria', desc: 'Gastronomía, minería, energía, retail, turismo y distribución — con un trato cercano y directo.' },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: 'Nosotros', item: `${SITE.url}/nosotros` },
+  ],
+};
+---
+<BaseLayout
+  title="Nosotros — Consultora integral en San Juan | CIAF"
+  description="CIAF es una consultora integral de San Juan: el equipo administrativo, contable, impositivo y financiero de más de 30 empresas. Conocé nuestra misión, visión y forma de trabajar."
+  path="/nosotros"
+  jsonLd={breadcrumb}
+>
+  <PageHero
+    eyebrow="Nosotros"
+    title="Somos tu equipo,<br />no una consultora más."
+    lead="Nacimos para ser el área administrativa, contable, impositiva y financiera que muchas empresas no pueden tener puertas adentro. Y crecemos cuando crecen nuestros clientes."
+    ctas={[
+      { label: 'Trabajemos juntos', href: waLink('Hola CIAF, quiero conocerlos y ver cómo pueden ayudarme'), external: true },
+      { label: 'Ver servicios', href: '/servicios', variant: 'ghost' },
+    ]}
+  />
+
+  <!-- Misión / Visión -->
+  <section class="section">
+    <div class="container">
+      <div class="mv-grid">
+        <article class="mv-card reveal" data-reveal="left">
+          <span class="eyebrow">// Misión</span>
+          <p class="mv-text">{MISION}</p>
+        </article>
+        <article class="mv-card mv-card--brand reveal" data-reveal="right" data-delay="1">
+          <span class="eyebrow mv-eyebrow-gold">// Visión</span>
+          <p class="mv-text">{VISION}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué CIAF -->
+  <section class="section">
+    <div class="container">
+      <span class="ribbon reveal">Por qué CIAF</span>
+      <h2 class="h2 reveal" style="margin-top: var(--space-md); max-width: 22ch;">Lo que nos hace distintos.</h2>
+      <div class="grid-hair razones reveal">
+        {RAZONES.map((r) => (
+          <div class="razon-cell">
+            <span class="razon-icon" set:html={iconSvg(r.icon)} />
+            <div>
+              <h3 class="razon-title">{r.title}</h3>
+              <p class="razon-desc">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Banda humana -->
+  <section class="section">
+    <div class="container human-grid">
+      <div
+        class="human-media reveal"
+        data-reveal="left"
+        style="--photo: url('/fotos/nosotros.webp')"
+        role="img"
+        aria-label="Equipo de CIAF en San Juan"
+      ></div>
+      <div class="human-text reveal" data-reveal="right" data-delay="1">
+        <span class="ribbon">Cerca, en serio</span>
+        <h2 class="h2 human-title">Personas que atienden a personas.</h2>
+        <p class="human-body">
+          Detrás de cada número hay un equipo que conoce tu nombre, tu negocio y tus tiempos.
+          Trabajamos con cercanía y trato directo: cuando nos necesitás, hablás con quien de verdad
+          entiende tu operación.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner title="Hablemos de tu empresa." />
+</BaseLayout>
+
+<style>
+  .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .mv-card { background: linear-gradient(180deg, rgba(30,74,130,0.10), rgba(30,74,130,0)); border: 1px solid var(--line); padding: clamp(28px, 4vw, 48px); }
+  .mv-card--brand { background: linear-gradient(180deg, rgba(30,74,130,0.32), rgba(14,31,51,0.4)); border-color: var(--line-strong); }
+  .mv-eyebrow-gold { color: var(--gold); }
+  .mv-text { margin-top: var(--space-md); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; color: var(--ciaf-on-navy-80); }
+  @media (max-width: 720px) { .mv-grid { grid-template-columns: 1fr; } }
+
+  .razones { margin-top: var(--space-lg); grid-template-columns: repeat(2, 1fr); }
+  .razon-cell { padding: clamp(22px, 3vw, 34px); display: flex; flex-direction: column; gap: 16px; }
+  .razon-icon { color: #fff; }
+  .razon-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: 17px; color: #fff; }
+  .razon-desc { color: var(--ciaf-on-navy-60); font-size: 14px; margin-top: 4px; }
+  @media (max-width: 760px) { .razones { grid-template-columns: 1fr; } }
+
+  /* Banda humana */
+  .human-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .human-media {
+    position: relative; min-height: clamp(240px, 34vw, 400px); border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md); overflow: hidden;
+    background-image: var(--photo, none), linear-gradient(155deg, rgba(45,108,184,0.55), rgba(14,31,51,0.92));
+    background-size: cover; background-position: center; box-shadow: var(--shadow-card);
+  }
+  .human-media::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 34px 34px; mix-blend-mode: overlay;
+  }
+  .human-title { margin-top: var(--space-md); max-width: 16ch; }
+  .human-body { margin-top: var(--space-md); color: var(--ciaf-on-navy-80); font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; max-width: 52ch; }
+  @media (max-width: 820px) { .human-grid { grid-template-columns: 1fr; } .human-media { order: -1; min-height: clamp(200px, 52vw, 300px); } }
+</style>

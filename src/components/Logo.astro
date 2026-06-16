@@ -1,0 +1,16 @@
+---
+// Logo CIAF — imagen real (logo_grande.png → logo.webp optimizado).
+interface Props {
+  height?: number;
+  class?: string;
+}
+const { height = 40, class: className = '' } = Astro.props;
+---
+<img
+  src="/logo.webp"
+  alt="CIAF Consultora Integral"
+  height={height}
+  style={`height:${height}px;width:auto`}
+  class={className}
+  decoding="async"
+/>

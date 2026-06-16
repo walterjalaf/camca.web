@@ -1,0 +1,69 @@
+/* ============================================================
+   CIAF · Design System tokens — FIEL AL BROCHURE
+   (ciaf-brochure-pdf.html). Único lugar de colores/tipografía.
+   ============================================================ */
+
+:root {
+  /* ---- Paleta del brochure ---- */
+  --ink: #0E1F33;        /* Azul Profundo — dominante */
+  --brand: #1E4A82;      /* Azul Marca — ribbons, acentos */
+  --brand-2: #2D6CB8;    /* Azul Marca claro — hover/links */
+  --pearl: #E8EAEC;      /* Gris perla */
+  --paper: #F5F6F8;      /* Fondo claro neutral */
+  --soft: #1A1A1A;       /* Texto largo sobre claro */
+  --gold: #F5A623;       /* Acento (chip / detalles puntuales) */
+
+  /* líneas (sobre oscuro / sobre claro) */
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.20);
+  --line-dark: rgba(14, 31, 51, 0.10);
+
+  /* Alias semánticos usados por los componentes (mapeados al brochure) */
+  --ciaf-ink: #0E1F33;
+  --ciaf-navy-deep: #0E1F33;
+  --ciaf-navy: #1E4A82;
+  --ciaf-navy-soft: #2D6CB8;
+  --ciaf-white: #FFFFFF;
+  --ciaf-cream: #F5F6F8;
+  --ciaf-gold: #F5A623;
+  --ciaf-mist: #E8EAEC;
+  --ciaf-on-navy-80: rgba(255, 255, 255, 0.80);
+  --ciaf-on-navy-60: rgba(255, 255, 255, 0.62);
+  /* etiquetas mono pequeñas: subido a 0.70 para pasar WCAG AA sobre --ink */
+  --ciaf-on-navy-55: rgba(255, 255, 255, 0.70);
+  --ciaf-on-navy-line: rgba(255, 255, 255, 0.12);
+  --ciaf-ink-60: rgba(26, 26, 26, 0.66);
+  --ciaf-ink-45: rgba(26, 26, 26, 0.58);
+
+  /* ---- Tipografía del brochure ---- */
+  --font-display: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Open Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---- Espaciado (8px) ---- */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+  --space-xl: 96px;
+  --space-2xl: 128px;
+
+  /* ---- Layout ---- */
+  --content-max: 1320px;
+  --content-pad: clamp(24px, 5vw, 80px);
+  --section-pad-y: clamp(var(--space-xl), 11vw, 140px);
+  --nav-h: 76px;
+
+  /* ---- tracking del brochure ---- */
+  --tracking-mega: 0.14em;
+  --tracking-wider2: 0.06em;
+
+  /* ---- Bordes / sombras / motion ---- */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: 0 30px 80px rgba(0, 0, 0, 0.55), 0 12px 28px rgba(0, 0, 0, 0.4);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-reveal: 700ms;
+  --dur-hover: 250ms;
+}

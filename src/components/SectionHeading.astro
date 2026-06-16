@@ -1,0 +1,21 @@
+---
+interface Props {
+  eyebrow?: string;        // texto del ribbon
+  title: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { eyebrow, title, align = 'left', class: className = '' } = Astro.props;
+---
+<div class:list={['section-heading reveal', `align-${align}`, className]}>
+  {eyebrow && <span class="ribbon">{eyebrow}</span>}
+  <h2 class="h2 section-heading-title" set:html={title} />
+  {Astro.slots.has('default') && <div class="section-heading-sub lead"><slot /></div>}
+</div>
+
+<style>
+  .section-heading { max-width: 820px; }
+  .align-center { margin-inline: auto; text-align: center; }
+  .section-heading-title { margin-top: var(--space-md); }
+  .section-heading-sub { margin-top: var(--space-md); }
+</style>

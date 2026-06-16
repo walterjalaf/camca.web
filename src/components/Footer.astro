@@ -1,0 +1,81 @@
+---
+import Logo from '@components/Logo.astro';
+import { SITE, CONTACT, NAV, waLink } from '@data/site';
+import { socialSvg } from '@data/icons';
+const year = 2026;
+const industrias = NAV.find((n) => 'children' in n && n.children)?.children ?? [];
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo" aria-label="CIAF · Inicio"><Logo height={44} /></a>
+      <p class="footer-claim">
+        Consultora integral de outsourcing administrativo, contable, impositivo y financiero.
+        {SITE.tagline}.
+      </p>
+      <div class="footer-social">
+        <a href={CONTACT.social.instagram.url} target="_blank" rel="noopener" class="footer-social-btn" aria-label={`Instagram · ${CONTACT.social.instagram.label}`}>
+          <span set:html={socialSvg('instagram', 20)} />
+        </a>
+        <a href={CONTACT.social.linkedin.url} target="_blank" rel="noopener" class="footer-social-btn" aria-label={`LinkedIn · ${CONTACT.social.linkedin.label}`}>
+          <span set:html={socialSvg('linkedin', 20)} />
+        </a>
+      </div>
+    </div>
+
+    <nav class="footer-col" aria-label="Servicios e industrias">
+      <h2 class="footer-h">// Explorar</h2>
+      <a href="/">Inicio</a>
+      <a href="/servicios">Servicios</a>
+      <a href="/nosotros">Nosotros</a>
+      <a href="/contacto">Contacto</a>
+      {industrias.map((i) => <a href={i.href}>{i.label}</a>)}
+    </nav>
+
+    <div class="footer-col">
+      <h2 class="footer-h">// Contacto</h2>
+      {CONTACT.emails.map((e) => (
+        <a href={`mailto:${e.address}`}>{e.address}</a>
+      ))}
+      <a href={`tel:${CONTACT.phoneTel}`}>{CONTACT.phoneDisplay}</a>
+      <a href={waLink()} target="_blank" rel="noopener">WhatsApp</a>
+      <address class="footer-address">{CONTACT.address}<br />{CONTACT.city}, {CONTACT.country}</address>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© {year} {SITE.name} · {CONTACT.city}, {CONTACT.country}</span>
+    <span class="footer-tag">{SITE.tagline}</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--ink); color: var(--ciaf-on-navy-80); padding-block: var(--space-xl) var(--space-md); border-top: 1px solid var(--line); }
+  .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: var(--space-lg); padding-bottom: var(--space-lg); }
+  .footer-logo { display: inline-flex; }
+  .footer-claim { max-width: 40ch; margin-top: var(--space-md); color: var(--ciaf-on-navy-60); }
+  .footer-social { display: flex; gap: var(--space-sm); margin-top: var(--space-md); }
+  .footer-social-btn {
+    display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+    border: 1px solid var(--line-strong); border-radius: var(--radius-sm); color: #fff;
+    transition: background var(--dur-hover), border-color var(--dur-hover), color var(--dur-hover), transform var(--dur-hover);
+  }
+  .footer-social-btn:hover { background: var(--brand); border-color: var(--brand); color: #fff; transform: translateY(-2px); }
+  .footer-social-btn :global(svg) { display: block; }
+
+  .footer-col { display: flex; flex-direction: column; gap: 10px; }
+  .footer-h { font-family: var(--font-mono); font-weight: 400; font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--ciaf-on-navy-55); margin-bottom: 6px; }
+  .footer-col a { color: var(--ciaf-on-navy-80); display: inline-block; padding: 5px 0; transition: color var(--dur-hover); }
+  .footer-col a:hover { color: #fff; }
+  .footer-address { font-style: normal; color: var(--ciaf-on-navy-60); margin-top: 4px; }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; gap: var(--space-sm); flex-wrap: wrap;
+    padding-top: var(--space-md); border-top: 1px solid var(--line);
+    font-family: var(--font-mono); font-size: 11px; color: var(--ciaf-on-navy-60); letter-spacing: 0.06em;
+  }
+  .footer-tag { text-transform: uppercase; }
+
+  @media (max-width: 820px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; gap: var(--space-md); } }
+</style>

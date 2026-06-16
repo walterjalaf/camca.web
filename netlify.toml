@@ -1,0 +1,57 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Redirección de dominio: .com (y su www) → dominio canónico .com.ar (301 permanente).
+# Requiere que ciafconsultora.com y www.ciafconsultora.com estén agregados como
+# alias de dominio del sitio en Netlify y apuntando a este sitio por DNS.
+[[redirects]]
+  from = "https://ciafconsultora.com/*"
+  to = "https://ciafconsultora.com.ar/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.ciafconsultora.com/*"
+  to = "https://ciafconsultora.com.ar/:splat"
+  status = 301
+  force = true
+
+# Unificar en la variante sin www: www.com.ar → com.ar (301 permanente).
+[[redirects]]
+  from = "https://www.ciafconsultora.com.ar/*"
+  to = "https://ciafconsultora.com.ar/:splat"
+  status = 301
+  force = true
+
+# Cabeceras de seguridad y caché
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/clientes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/integraciones/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

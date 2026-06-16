@@ -1,0 +1,20 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  gold?: boolean;
+  delay?: 0 | 1 | 2 | 3;
+}
+const { value, label, gold = false, delay = 0 } = Astro.props;
+---
+<div class="kpi reveal" data-delay={delay}>
+  <span class:list={['kpi-num', { 'kpi-gold': gold }]} data-countup={value}>{value}</span>
+  <span class="kpi-label">{label}</span>
+</div>
+
+<style>
+  .kpi { display: flex; flex-direction: column; gap: 8px; }
+  .kpi-gold { color: var(--gold); }
+  .kpi-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--ciaf-on-navy-55); }
+  :global(.section--paper) .kpi-label { color: rgba(26, 26, 26, 0.55); }
+</style>

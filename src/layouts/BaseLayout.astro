@@ -1,0 +1,113 @@
+---
+import '@styles/global.css';
+import Seo from '@components/Seo.astro';
+import Navbar from '@components/Navbar.astro';
+import Footer from '@components/Footer.astro';
+import FloatingWhatsApp from '@components/FloatingWhatsApp.astro';
+import { SITE } from '@data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { title, description, path, ogImage, jsonLd, noindex } = Astro.props;
+---
+<!doctype html>
+<html lang={SITE.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0F2747" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Fuentes self-hosted (preload del subset latin variable) -->
+    <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/opensans.woff2" as="font" type="font/woff2" crossorigin />
+
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      ogImage={ogImage}
+      jsonLd={jsonLd}
+      noindex={noindex}
+    />
+
+    <!-- Sin JS: el contenido con reveal igual debe verse -->
+    <noscript>
+      <style>
+        .reveal { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <Navbar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingWhatsApp />
+
+    <!-- Reveal on scroll (vanilla, respeta prefers-reduced-motion) -->
+    <script>
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('.reveal');
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+
+      // Count-up de KPIs (conserva prefijo/sufijo; respeta reduced-motion)
+      const counters = document.querySelectorAll('[data-countup]');
+      if (counters.length && !prefersReduced && 'IntersectionObserver' in window) {
+        const parse = (raw: string) => {
+          const m = raw.trim().match(/^(\D*)(\d+)(\D*)$/);
+          return m ? { pre: m[1], num: parseInt(m[2], 10), suf: m[3] } : null;
+        };
+        const run = (el: Element) => {
+          const raw = el.getAttribute('data-countup') || el.textContent || '';
+          const p = parse(raw);
+          if (!p) return;
+          const dur = 1100;
+          const start = performance.now();
+          const tick = (now: number) => {
+            const t = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - t, 3);
+            el.textContent = p.pre + Math.round(p.num * eased) + p.suf;
+            if (t < 1) requestAnimationFrame(tick);
+            else el.textContent = raw.trim();
+          };
+          requestAnimationFrame(tick);
+        };
+        const ioc = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) { run(e.target); ioc.unobserve(e.target); }
+            });
+          },
+          { threshold: 0.4 }
+        );
+        counters.forEach((el) => ioc.observe(el));
+      }
+    </script>
+  </body>
+</html>

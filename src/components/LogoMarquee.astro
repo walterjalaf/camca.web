@@ -1,0 +1,55 @@
+---
+// Carrusel de logos de clientes — marquee horizontal que se mueve de IZQUIERDA a DERECHA,
+// en loop sin costura (dos copias). Pausa en hover; estático con prefers-reduced-motion.
+import type { Cliente } from '@data/clientes';
+interface Props {
+  clientes: Cliente[];
+  speed?: number; // segundos por vuelta
+}
+const { clientes, speed = 55 } = Astro.props;
+const loop = [...clientes, ...clientes];
+const n = clientes.length;
+---
+<div class="marquee" role="group" aria-label="Empresas que confían en CIAF">
+  <div class="marquee-track" style={`animation-duration:${speed}s`}>
+    {loop.map((c, i) => (
+      <div class:list={['marquee-item', { 'is-dark': c.dark }]} aria-hidden={i >= n ? 'true' : undefined}>
+        {c.logo ? (
+          <img src={c.logo} alt={c.name} width="150" height="90" loading="lazy" decoding="async" />
+        ) : (
+          <span class="marquee-ph">{c.name}</span>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    position: relative; overflow: hidden; width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .marquee-track {
+    display: flex; align-items: center; gap: var(--space-md); width: max-content;
+    animation-name: marquee-ltr; animation-timing-function: linear; animation-iteration-count: infinite;
+  }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+  .marquee-item {
+    flex: 0 0 auto; width: clamp(132px, 16vw, 168px); height: clamp(78px, 10vw, 96px);
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; border-radius: var(--radius-md); padding: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  }
+  /* Logos con letras blancas: chip oscuro para que se vean */
+  .marquee-item.is-dark { background: #13162a; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32); }
+  .marquee-item img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+  .marquee-ph {
+    color: var(--ink); font-family: var(--font-display); font-weight: 800; font-size: 13px;
+    text-align: center; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.01em;
+  }
+
+  /* L→R: el contenido se desplaza hacia la derecha; el loop es continuo por la copia duplicada */
+  @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+</style>

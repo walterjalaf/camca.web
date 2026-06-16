@@ -1,0 +1,147 @@
+---
+import Logo from '@components/Logo.astro';
+import { NAV, waLink } from '@data/site';
+const current = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current.startsWith(href.split('#')[0]);
+---
+<header class="site-nav no-print" id="site-nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo" aria-label="CIAF · Inicio">
+      <Logo height={34} />
+    </a>
+
+    <nav class="nav-links" aria-label="Navegación principal">
+      {NAV.map((item) =>
+        'children' in item && item.children ? (
+          <div class="nav-item nav-has-children">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">
+              {item.label}
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+            </button>
+            <div class="nav-dropdown" role="menu">
+              {item.children.map((c) => (
+                <a href={c.href} role="menuitem" class:list={['nav-dropdown-link', { 'is-active': isActive(c.href) }]}>{c.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class:list={['nav-link', { 'is-active': isActive(item.href) }]}>{item.label}</a>
+        )
+      )}
+    </nav>
+
+    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid nav-cta">Agendar reunión</a>
+
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="/">Inicio</a>
+    <a href="/servicios">Servicios</a>
+    <div class="mobile-group-label">Industrias</div>
+    <a href="/industrias/gastronomia" class="mobile-sub">Gastronomía</a>
+    <a href="/industrias/mineria-y-servicios" class="mobile-sub">Minería y servicios</a>
+    <a href="/industrias/energia" class="mobile-sub">Energía</a>
+    <a href="/industrias/retail" class="mobile-sub">Retail</a>
+    <a href="/industrias/turismo-y-deportes" class="mobile-sub">Turismo y deportes</a>
+    <a href="/industrias/distribucion" class="mobile-sub">Distribución</a>
+    <a href="/nosotros">Nosotros</a>
+    <a href="/contacto">Contacto</a>
+    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid mobile-cta">Agendar reunión</a>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h);
+    background: rgba(14, 31, 51, 0.82);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line); color: #fff;
+  }
+  .nav-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+  .nav-logo { display: inline-flex; align-items: center; }
+  /* Feedback al abrir el menú mobile: header sólido */
+  .site-nav:has(#nav-burger[aria-expanded="true"]) { background: var(--ink); border-bottom-color: var(--line-strong); }
+
+  .nav-links { display: none; align-items: center; gap: var(--space-md); }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--ciaf-on-navy-80);
+    background: none; border: 0; padding: 6px 0; transition: color var(--dur-hover);
+  }
+  .nav-link:hover, .nav-link.is-active { color: #fff; }
+
+  .nav-item.nav-has-children { position: relative; }
+  .nav-dropdown {
+    position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(8px);
+    min-width: 250px; background: var(--ink); border: 1px solid var(--line-strong);
+    padding: 8px; opacity: 0; visibility: hidden;
+    transition: opacity var(--dur-hover), transform var(--dur-hover), visibility var(--dur-hover);
+  }
+  .nav-has-children:hover .nav-dropdown, .nav-has-children:focus-within .nav-dropdown, .nav-dropdown.open {
+    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown-link {
+    display: block; padding: 11px 14px; font-size: 13px; text-transform: uppercase;
+    font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em;
+    color: var(--ciaf-on-navy-80); transition: background var(--dur-hover), color var(--dur-hover);
+  }
+  .nav-dropdown-link:hover, .nav-dropdown-link.is-active { background: rgba(255,255,255,0.06); color: #fff; }
+
+  .nav-cta { display: none; padding: 0.6rem 1.1rem; font-size: 11px; }
+
+  .nav-burger { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 10px; background: none; border: 0; }
+  .nav-burger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
+  .nav-burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+    background: var(--ink); border-top: 1px solid var(--line);
+    padding: var(--space-sm) var(--content-pad) var(--space-md);
+    display: flex; flex-direction: column; max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
+  }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu a { color: var(--ciaf-on-navy-80); padding: 14px 0; font-size: 15px; text-transform: uppercase; font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em; border-bottom: 1px solid var(--line); }
+  .mobile-menu a.mobile-sub { padding-left: 16px; font-size: 13px; color: var(--ciaf-on-navy-60); }
+  .mobile-group-label { color: var(--gold); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); padding: 16px 0 6px; }
+  .mobile-cta { justify-content: center; margin-top: var(--space-sm); border-bottom: 0 !important; }
+
+  @media (min-width: 1024px) {
+    .nav-links { display: flex; }
+    .nav-cta { display: inline-flex; }
+    .nav-burger { display: none; }
+    .mobile-menu { display: none !important; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('mobile-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', () => {
+      const open = menu.hasAttribute('hidden');
+      if (open) menu.removeAttribute('hidden'); else menu.setAttribute('hidden', '');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  document.querySelectorAll<HTMLButtonElement>('.nav-trigger').forEach((trigger) => {
+    const dropdown = trigger.nextElementSibling;
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      dropdown?.classList.toggle('open', !expanded);
+    });
+    document.addEventListener('click', (e) => {
+      if (!trigger.parentElement?.contains(e.target as Node)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown?.classList.remove('open');
+      }
+    });
+  });
+</script>

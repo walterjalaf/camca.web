@@ -1,0 +1,86 @@
+---
+// Hero de páginas internas — estética brochure (oscuro, ribbon, Montserrat).
+// Opcional: panel de imagen (con fallback de gradiente on-brand) y CTAs.
+interface Cta {
+  label: string;
+  href: string;
+  variant?: 'solid' | 'ghost';
+  external?: boolean;
+}
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  image?: string;
+  imageAlt?: string;
+  ctas?: Cta[];
+}
+const { eyebrow, title, lead, image, imageAlt = '', ctas = [] } = Astro.props;
+const hasImg = !!image;
+---
+<section class:list={['page-hero hero-bg section--flat', { 'page-hero--media': hasImg }]}>
+  <div class="container page-hero-inner">
+    <div class="page-hero-text">
+      <span class="ribbon load-in">{eyebrow}</span>
+      <h1 class="h1 page-hero-title load-in" data-delay="1" set:html={title} />
+      {lead && <p class="lead page-hero-lead load-in" data-delay="2">{lead}</p>}
+      {ctas.length > 0 && (
+        <div class="page-hero-ctas load-in" data-delay="3">
+          {ctas.map((c) => (
+            <a
+              href={c.href}
+              class:list={['btn', { 'btn--solid': c.variant !== 'ghost' }]}
+              {...(c.external ? { target: '_blank', rel: 'noopener' } : {})}
+            >{c.label}</a>
+          ))}
+        </div>
+      )}
+      <div class="page-hero-extra"><slot /></div>
+    </div>
+
+    {hasImg && (
+      <div
+        class="page-hero-media load-in"
+        data-delay="2"
+        style={`--photo: url('${image}')`}
+        role="img"
+        aria-label={imageAlt}
+      ></div>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero { padding-top: calc(var(--nav-h) + var(--space-lg)); padding-bottom: var(--space-xl); border-bottom: 1px solid var(--line); }
+  .page-hero-title { margin-top: var(--space-md); max-width: 16ch; }
+  .page-hero-lead { margin-top: var(--space-md); max-width: 56ch; }
+  .page-hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
+  .page-hero-extra:not(:empty) { margin-top: var(--space-lg); }
+
+  /* Layout con imagen: texto + panel de foto */
+  .page-hero--media .page-hero-inner {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(28px, 5vw, 72px); align-items: center;
+  }
+  .page-hero-media {
+    position: relative; min-height: clamp(280px, 38vw, 460px); border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md); overflow: hidden;
+    /* La foto se dibuja arriba; si falta, queda el gradiente on-brand (sin ícono roto). */
+    background-image: var(--photo, none),
+      linear-gradient(155deg, rgba(45, 108, 184, 0.55), rgba(14, 31, 51, 0.92));
+    background-size: cover; background-position: center;
+    box-shadow: var(--shadow-card);
+  }
+  /* Textura sutil + etiqueta para que el fallback se vea intencional */
+  .page-hero-media::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 34px 34px; mix-blend-mode: overlay;
+  }
+
+  @media (max-width: 880px) {
+    .page-hero--media .page-hero-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .page-hero-media { order: -1; min-height: clamp(200px, 52vw, 320px); }
+  }
+</style>

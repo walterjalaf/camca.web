@@ -1,0 +1,85 @@
+---
+// SEO centralizado: title, description, canonical, OG/Twitter y JSON-LD.
+import { SITE, CONTACT } from '@data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** path absoluto de la página, ej "/servicios" */
+  path?: string;
+  ogImage?: string;
+  /** JSON-LD adicional (Service, FAQPage, BreadcrumbList, etc.) */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  ogImage = '/og-image.png',
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, SITE.url).href;
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+
+// JSON-LD base: Organization + ProfessionalService (presente en todas las páginas)
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${SITE.url}/#organization`,
+  name: SITE.name,
+  alternateName: 'CIAF',
+  url: SITE.url,
+  email: CONTACT.emails.map((e) => e.address),
+  telephone: CONTACT.phoneTel,
+  image: ogImageUrl,
+  description:
+    'Consultora integral de outsourcing administrativo, contable, impositivo y financiero en San Juan, Argentina.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: CONTACT.address,
+    addressLocality: CONTACT.city,
+    addressRegion: 'San Juan',
+    addressCountry: CONTACT.countryCode,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: CONTACT.geo.lat,
+    longitude: CONTACT.geo.lng,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'San Juan' },
+    { '@type': 'Country', name: 'Argentina' },
+  ],
+  sameAs: [CONTACT.social.instagram.url, CONTACT.social.linkedin.url],
+};
+
+const blocks: Record<string, unknown>[] = [organization];
+if (Array.isArray(jsonLd)) blocks.push(...jsonLd);
+else if (jsonLd) blocks.push(jsonLd);
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:locale" content="es_AR" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{blocks.map((b) => (
+  <script type="application/ld+json" set:html={JSON.stringify(b)} />
+))}
