@@ -1,14 +1,8 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CIAF">
-  <rect width="240" height="240" rx="28" fill="#0F2747"/>
-  <g transform="translate(20,0)" fill="#FFFFFF">
-    <rect x="2" y="2" width="196" height="236" fill="none" stroke="#FFFFFF" stroke-width="4"/>
-    <path d="M 145 75 Q 100 55 70 90 Q 55 120 70 155 Q 100 180 145 165" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="square"/>
-    <rect x="60" y="170" width="90" height="8"/>
-    <rect x="68" y="178" width="6" height="50"/>
-    <rect x="80" y="178" width="6" height="50"/>
-    <rect x="92" y="178" width="6" height="50"/>
-    <rect x="104" y="178" width="6" height="50"/>
-    <rect x="116" y="178" width="6" height="50"/>
-    <rect x="128" y="178" width="6" height="50"/>
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CAMCA">
+  <rect width="240" height="240" rx="28" fill="#0B3B24"/>
+  <g transform="translate(45,58)">
+    <polygon points="75,0 140,38 75,76 10,38" fill="#9C8D7C"/>
+    <polygon points="10,38 75,76 75,150 10,112" fill="#FFFFFF"/>
+    <polygon points="140,38 75,76 75,150 140,112" fill="#2E7D53"/>
   </g>
 </svg>

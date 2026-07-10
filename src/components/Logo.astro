@@ -1,16 +1,46 @@
 ---
-// Logo CIAF — imagen real (logo_grande.png → logo.webp optimizado).
+// Logo CAMCA — marca isométrica (cubo tres caras) + logotipo, recreada en SVG
+// a partir de los colores reales de marca (dist/referencias/image_camca.jpeg).
+// `full`: agrega el subtítulo "Servicios Integrales" apilado debajo (footer/hero).
 interface Props {
   height?: number;
   class?: string;
+  full?: boolean;
 }
-const { height = 40, class: className = '' } = Astro.props;
+const { height = 40, class: className = '', full = false } = Astro.props;
 ---
-<img
-  src="/logo.webp"
-  alt="CIAF Consultora Integral"
-  height={height}
-  style={`height:${height}px;width:auto`}
-  class={className}
-  decoding="async"
-/>
+{full ? (
+  <svg
+    viewBox="0 0 300 118"
+    height={height}
+    width={height * (300 / 118)}
+    class={className}
+    role="img"
+    aria-label="CAMCA · Servicios Integrales"
+  >
+    <g transform="translate(112,0)">
+      <polygon points="38,2 68,18 38,34 8,18" fill="var(--camca-cube-top, #9C8D7C)" />
+      <polygon points="8,18 38,34 38,66 8,50" fill="#FFFFFF" />
+      <polygon points="68,18 38,34 38,66 68,50" fill="var(--camca-cube-face, #2E7D53)" />
+    </g>
+    <text x="150" y="90" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" letter-spacing="6" fill="#fff">CAMCA</text>
+    <line x1="52" y1="99" x2="248" y2="99" stroke="#fff" stroke-width="1" />
+    <text x="150" y="112" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" letter-spacing="4" fill="#fff">SERVICIOS INTEGRALES</text>
+  </svg>
+) : (
+  <svg
+    viewBox="0 0 210 64"
+    height={height}
+    width={height * (210 / 64)}
+    class={className}
+    role="img"
+    aria-label="CAMCA · Servicios Integrales"
+  >
+    <g transform="translate(0,0)">
+      <polygon points="32,2 60,16 32,30 4,16" fill="var(--camca-cube-top, #9C8D7C)" />
+      <polygon points="4,16 32,30 32,60 4,46" fill="#FFFFFF" />
+      <polygon points="60,16 32,30 32,60 60,46" fill="var(--camca-cube-face, #2E7D53)" />
+    </g>
+    <text x="76" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="3" fill="#fff">CAMCA</text>
+  </svg>
+)}

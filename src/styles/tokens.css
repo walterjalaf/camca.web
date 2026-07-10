@@ -1,44 +1,52 @@
 /* ============================================================
-   CIAF · Design System tokens — FIEL AL BROCHURE
-   (ciaf-brochure-pdf.html). Único lugar de colores/tipografía.
+   CAMCA · Design System tokens — paleta real de marca
+   (muestreada de dist/referencias/image_camca.jpeg). Único lugar
+   de colores/tipografía.
    ============================================================ */
 
 :root {
-  /* ---- Paleta del brochure ---- */
-  --ink: #0E1F33;        /* Azul Profundo — dominante */
-  --brand: #1E4A82;      /* Azul Marca — ribbons, acentos */
-  --brand-2: #2D6CB8;    /* Azul Marca claro — hover/links */
-  --pearl: #E8EAEC;      /* Gris perla */
-  --paper: #F5F6F8;      /* Fondo claro neutral */
+  /* ---- Paleta de marca (verde bosque + piedra + terracota de montaña) ---- */
+  --ink: #0B3B24;        /* Verde bosque profundo — dominante */
+  --brand: #2E7D53;      /* Verde marca — cara del cubo, ribbons, acentos */
+  --brand-2: #3E9A67;    /* Verde marca claro — hover/links */
+  --pearl: #EDEAE2;      /* Piedra clara */
+  --paper: #F7F5F0;      /* Fondo claro neutral, cálido */
   --soft: #1A1A1A;       /* Texto largo sobre claro */
-  --gold: #F5A623;       /* Acento (chip / detalles puntuales) */
+  --gold: #C97D4A;       /* Acento terracota — color de la cordillera de Calingasta */
 
   /* líneas (sobre oscuro / sobre claro) */
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.20);
-  --line-dark: rgba(14, 31, 51, 0.10);
+  --line-dark: rgba(11, 59, 36, 0.10);
 
-  /* Alias semánticos usados por los componentes (mapeados al brochure) */
-  --ciaf-ink: #0E1F33;
-  --ciaf-navy-deep: #0E1F33;
-  --ciaf-navy: #1E4A82;
-  --ciaf-navy-soft: #2D6CB8;
-  --ciaf-white: #FFFFFF;
-  --ciaf-cream: #F5F6F8;
-  --ciaf-gold: #F5A623;
-  --ciaf-mist: #E8EAEC;
-  --ciaf-on-navy-80: rgba(255, 255, 255, 0.80);
-  --ciaf-on-navy-60: rgba(255, 255, 255, 0.62);
+  /* Alias semánticos usados por los componentes */
+  --camca-ink: #0B3B24;
+  --camca-navy-deep: #0B3B24;
+  --camca-navy: #2E7D53;
+  --camca-navy-soft: #3E9A67;
+  --camca-white: #FFFFFF;
+  --camca-cream: #F7F5F0;
+  --camca-gold: #C97D4A;
+  --camca-mist: #EDEAE2;
+  --camca-stone: #9C8D7C; /* piedra/tierra — cara superior del cubo, acentos terciarios */
+  --camca-on-navy-80: rgba(255, 255, 255, 0.80);
+  --camca-on-navy-60: rgba(255, 255, 255, 0.62);
   /* etiquetas mono pequeñas: subido a 0.70 para pasar WCAG AA sobre --ink */
-  --ciaf-on-navy-55: rgba(255, 255, 255, 0.70);
-  --ciaf-on-navy-line: rgba(255, 255, 255, 0.12);
-  --ciaf-ink-60: rgba(26, 26, 26, 0.66);
-  --ciaf-ink-45: rgba(26, 26, 26, 0.58);
+  --camca-on-navy-55: rgba(255, 255, 255, 0.70);
+  --camca-on-navy-line: rgba(255, 255, 255, 0.12);
+  --camca-ink-60: rgba(26, 26, 26, 0.66);
+  --camca-ink-45: rgba(26, 26, 26, 0.58);
 
-  /* ---- Tipografía del brochure ---- */
-  --font-display: 'Montserrat', system-ui, sans-serif;
-  --font-body: 'Open Sans', system-ui, sans-serif;
+  /* Colores reales del cubo del isotipo (consumidos por Logo.astro) */
+  --camca-cube-top: #9C8D7C;
+  --camca-cube-face: #2E7D53;
+
+  /* ---- Tipografía ---- */
+  /* Big Shoulders: condensada e industrial — evoca cartelería de maquinaria y obra */
+  --font-display: 'Big Shoulders', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-logo: Georgia, 'Times New Roman', serif; /* solo para el logotipo CAMCA */
 
   /* ---- Espaciado (8px) ---- */
   --space-xs: 8px;
@@ -54,7 +62,7 @@
   --section-pad-y: clamp(var(--space-xl), 11vw, 140px);
   --nav-h: 76px;
 
-  /* ---- tracking del brochure ---- */
+  /* ---- tracking ---- */
   --tracking-mega: 0.14em;
   --tracking-wider2: 0.06em;
 

@@ -30,18 +30,18 @@ const organization = {
   '@type': 'ProfessionalService',
   '@id': `${SITE.url}/#organization`,
   name: SITE.name,
-  alternateName: 'CIAF',
+  alternateName: 'CAMCA',
   url: SITE.url,
   email: CONTACT.emails.map((e) => e.address),
   telephone: CONTACT.phoneTel,
   image: ogImageUrl,
   description:
-    'Consultora integral de outsourcing administrativo, contable, impositivo y financiero en San Juan, Argentina.',
+    'Soluciones sanitarias móviles para minería, construcción, eventos y operaciones de alta exigencia en Calingasta, San Juan, Argentina.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: CONTACT.address,
     addressLocality: CONTACT.city,
-    addressRegion: 'San Juan',
+    addressRegion: CONTACT.region,
     addressCountry: CONTACT.countryCode,
   },
   geo: {
@@ -50,10 +50,10 @@ const organization = {
     longitude: CONTACT.geo.lng,
   },
   areaServed: [
-    { '@type': 'City', name: 'San Juan' },
+    { '@type': 'City', name: 'Calingasta' },
+    { '@type': 'AdministrativeArea', name: 'San Juan' },
     { '@type': 'Country', name: 'Argentina' },
   ],
-  sameAs: [CONTACT.social.instagram.url, CONTACT.social.linkedin.url],
 };
 
 const blocks: Record<string, unknown>[] = [organization];

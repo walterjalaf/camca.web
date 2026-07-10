@@ -1,140 +1,163 @@
 // ============================================================
-// CIAF · Servicios y sub-servicios reales (del material institucional)
-// No inventar sub-servicios.
+// CAMCA · Servicios reales (del material institucional: presentación
+// y manual de marca). No inventar sub-servicios.
 // ============================================================
 
 export interface Area {
-  id: 'administracion' | 'contabilidad' | 'impuestos' | 'finanzas' | 'software' | 'ia';
+  id:
+    | 'banos-ecologicos'
+    | 'modulos-sanitarios'
+    | 'modulos-habitacionales'
+    | 'garitas'
+    | 'mantenimiento-desagote'
+    | 'desagote-biodigestores'
+    | 'logistica-4x4'
+    | 'saneamiento-eventos';
   title: string;
   tagline: string;
   intro: string;
   items: string[];
+  image: string;
 }
 
-export const OUTSOURCING_BENEFITS = [
-  'Ahorro de tiempo y dinero',
-  'Mayor eficiencia',
-  'Acceso a expertos',
-  'Flexibilidad',
-  'Enfoque en el core business',
+export const BENEFICIOS = [
+  'Instalación y logística incluida',
+  'Mantenimiento periódico sin cargo adicional',
+  'Flota propia 4x4 para zonas de difícil acceso',
+  'Respuesta rápida ante emergencias',
+  'Cumplimiento de normativas de higiene y seguridad',
 ] as const;
 
 export const AREAS: Area[] = [
   {
-    id: 'administracion',
-    title: 'Administración',
-    tagline: 'Simplificamos tus procesos y optimizamos tus recursos',
+    id: 'banos-ecologicos',
+    title: 'Alquiler de Baños Ecológicos',
+    tagline: 'Baños químicos de alta resistencia',
     intro:
-      'Diseñamos y ejecutamos los procesos administrativos para que cada peso y cada hora cuenten.',
+      'Unidades sanitarias móviles diseñadas para soportar las condiciones más extremas: minería de alta montaña, obras industriales, eventos y campamentos.',
     items: [
-      'Gestión de personal: nóminas, altas y bajas, liquidaciones y cumplimiento normativo laboral',
-      'Gestión de proveedores: selección, negociación y seguimiento de pagos',
-      'Gestión de clientes y cobranzas',
-      'Gestión documental: archivo, digitalización y control',
-      'Gestión de proyectos: de la planificación a la ejecución',
-      'Administración de costos',
-      'Gestión de stock',
-      'Flujo de caja',
-      'Estados financieros',
-      'Conciliaciones bancarias',
-      'Implementación de sistemas',
-      'Participación en licitaciones',
-      'Inteligencia de negocios',
+      'Unidades numeradas e identificadas por sector (hombres / mujeres)',
+      'Estructura reforzada para clima de alta montaña',
+      'Provisión, traslado e instalación incluidos',
+      'Servicio de mantenimiento y limpieza periódica',
+      'Señalética de seguridad e higiene en cada unidad',
     ],
+    image: '/fotos/servicio-banos.webp',
   },
   {
-    id: 'contabilidad',
-    title: 'Contabilidad',
-    tagline: 'Transparencia y control en cada transacción',
+    id: 'modulos-sanitarios',
+    title: 'Módulos Sanitarios',
+    tagline: 'Infraestructura completa, en alquiler o venta',
     intro:
-      'Llevamos tu contabilidad con prolijidad y al día, con informes claros para que entiendas tu negocio.',
+      'Módulos sanitarios prefabricados para campamentos mineros, obras de gran escala y proyectos de larga duración, con instalación llave en mano. Disponibles tanto en alquiler como en venta, según la duración y el tipo de proyecto.',
     items: [
-      'Contabilidad general: registro de transacciones, conciliaciones, facturación y cuentas por cobrar/pagar',
-      'Contabilidad analítica: análisis de costos, control presupuestario e indicadores de gestión',
-      'Cierre contable y estados financieros (balance, estado de resultados, flujo de efectivo)',
-      'Preparación para auditorías',
-      'Asesoramiento contable e interpretación de estados financieros',
+      'Estructura metálica aislada para climas hostiles',
+      'Conexión a red de agua, desagote o biodigestor',
+      'Iluminación y artefactos completos',
+      'Traslado e instalación con equipo propio',
+      'Modalidad de alquiler o venta, a elección del cliente',
     ],
+    image: '/fotos/servicio-modulos.webp',
   },
   {
-    id: 'impuestos',
-    title: 'Impuestos',
-    tagline: 'Tranquilidad fiscal garantizada',
+    id: 'modulos-habitacionales',
+    title: 'Módulos Habitacionales',
+    tagline: 'Oficinas y dormitorios móviles, en alquiler o venta',
     intro:
-      'Cumplimiento al día y planificación fiscal estratégica, con conocimiento del entorno tributario argentino.',
+      'Módulos habitacionales equipados para personal en obra: oficinas de campo, dormitorios y espacios de uso diario en operaciones remotas. Disponibles tanto en alquiler como en venta, según la duración y el tipo de proyecto.',
     items: [
-      'Cálculo y declaración de impuestos nacionales, provinciales y municipales',
-      'Planificación fiscal e identificación de beneficios fiscales',
-      'Asesoramiento tributario y defensa ante fiscalizaciones',
-      'Gestión de vencimientos, presentaciones digitales y devoluciones',
+      'Aislación térmica para alta montaña',
+      'Instalación eléctrica y de climatización',
+      'Configuración a medida según el proyecto',
+      'Traslado con flota propia 4x4',
+      'Modalidad de alquiler o venta, a elección del cliente',
     ],
+    image: '/fotos/servicio-modulos-habitacionales.webp',
   },
   {
-    id: 'finanzas',
-    title: 'Finanzas',
-    tagline: 'Maximizá tus ganancias y minimizá tus riesgos',
+    id: 'garitas',
+    title: 'Garitas de Seguridad',
+    tagline: 'Control de acceso e ingreso',
     intro:
-      'Te damos visibilidad sobre tu dinero: liquidez, rentabilidad y decisiones de inversión.',
+      'Garitas móviles para control de acceso en obras, plantas industriales y predios que requieren un puesto de vigilancia permanente.',
     items: [
-      'Análisis financiero: situación, ratios y proyecciones',
-      'Planificación financiera: presupuestos, planes de inversión y de negocio',
-      'Gestión de tesorería: flujo de efectivo, bancos e inversiones de corto plazo',
-      'Valoración de empresas para fusiones, adquisiciones o venta',
-      'Asesoramiento financiero y estrategias de financiamiento',
+      'Estructura resistente con ventana de visibilidad completa',
+      'Fácil traslado y reubicación dentro del predio',
+      'Terminación e identidad de marca del cliente disponible',
     ],
+    image: '/fotos/servicio-garitas.webp',
   },
   {
-    id: 'software',
-    title: 'Desarrollo de software',
-    tagline: 'Sistemas a medida para tu operación',
+    id: 'mantenimiento-desagote',
+    title: 'Mantenimiento y Desagote',
+    tagline: 'Servicio periódico con flota propia',
     intro:
-      'Cuando ningún sistema del mercado te alcanza, lo desarrollamos: software a medida que se integra a tu forma de trabajar.',
+      'Limpieza, desinfección y desagote de baños y módulos sanitarios con una flota de camiones y camionetas 4x4 equipadas para responder en cualquier terreno.',
     items: [
-      'Aplicaciones y sistemas de gestión a medida',
-      'Integraciones entre tus sistemas (ERP, facturación, bancos)',
-      'Tableros y reportes automáticos en tiempo real',
-      'Automatización de procesos administrativos',
+      'Frecuencia de servicio ajustada a la demanda del proyecto',
+      'Equipos propios: camión desagote + flota 4x4',
+      'Registro de servicio por unidad',
+      'Respuesta ante urgencias fuera de cronograma',
     ],
+    image: '/fotos/servicio-desagote.webp',
   },
   {
-    id: 'ia',
-    title: 'Implementaciones con IA',
-    tagline: 'Inteligencia artificial aplicada a tu negocio',
+    id: 'desagote-biodigestores',
+    title: 'Desagote de Biodigestores',
+    tagline: 'Tratamiento responsable de efluentes',
     intro:
-      'Implementamos IA donde realmente mueve la aguja: para ahorrar tiempo, ordenar tus datos y darte mejor información para decidir.',
+      'Servicio especializado de desagote y mantenimiento de biodigestores para industrias y proyectos con sistemas de tratamiento propio.',
     items: [
-      'Automatización de tareas administrativas con IA',
-      'Asistentes y agentes a medida para tu equipo',
-      'Análisis y clasificación inteligente de datos',
-      'Implementación de herramientas de IA en tu operación',
+      'Camión cisterna equipado para alta montaña',
+      'Disposición de efluentes conforme a normativa ambiental',
+      'Coordinación con el cronograma de obra o planta',
     ],
+    image: '/fotos/servicio-desagote.webp',
+  },
+  {
+    id: 'logistica-4x4',
+    title: 'Logística 4x4 de Alta Montaña',
+    tagline: 'Acceso donde otros no llegan',
+    intro:
+      'Flota de camionetas 4x4 equipadas para transportar e instalar equipamiento en zonas de alta montaña y terrenos de difícil acceso.',
+    items: [
+      'Cobertura en toda la región de Cuyo con base en Calingasta',
+      'Choferes con experiencia en rutas de alta montaña',
+      'Capacidad de despliegue rápido ante pedidos urgentes',
+    ],
+    image: '/fotos/servicio-logistica.webp',
+  },
+  {
+    id: 'saneamiento-eventos',
+    title: 'Saneamiento para Eventos',
+    tagline: 'Cobertura sanitaria para grandes convocatorias',
+    intro:
+      'Soluciones sanitarias completas para eventos masivos, festivales y actividades corporativas, dimensionadas según el público esperado.',
+    items: [
+      'Cálculo de unidades según cantidad de asistentes',
+      'Instalación, mantenimiento y retiro incluidos',
+      'Disponibilidad para eventos de uno o varios días',
+    ],
+    image: '/fotos/servicio-eventos.webp',
   },
 ];
 
-// Servicios complementarios mencionados
-export const COMPLEMENTARIOS = [
-  'Consultoría societaria',
-  'Auditoría',
-  'Consultoría laboral',
-  'Acompañamiento en certificaciones ISO 9001',
-] as const;
-
-// Metodología: transformación en 4 dimensiones
-export const DIMENSIONES = [
+// Cómo trabajamos — de la consulta al mantenimiento en el terreno
+export const PROCESO = [
   {
-    title: 'Procesos',
-    desc: 'Rediseño de circuitos operativos para eliminar fricción y doble carga.',
+    title: 'Consultá',
+    desc: 'Contanos tu proyecto por WhatsApp, teléfono o formulario. Te respondemos el mismo día.',
   },
   {
-    title: 'Personas',
-    desc: 'Capacitación y estructura para que el equipo sostenga la mejora.',
+    title: 'Coordinamos logística',
+    desc: 'Definimos cantidad de unidades, plazos y acceso — con flota 4x4 propia para cualquier terreno.',
   },
   {
-    title: 'Tecnología',
-    desc: 'Implementación de sistemas que conectan tu operación.',
+    title: 'Instalamos',
+    desc: 'Trasladamos e instalamos el equipamiento en el lugar exacto que necesita tu proyecto.',
   },
   {
-    title: 'Infraestructura',
-    desc: 'Recursos físicos y digitales alineados a la estrategia.',
+    title: 'Mantenimiento',
+    desc: 'Limpieza, desagote y control periódico durante todo el proyecto, sin que tengas que pedirlo.',
   },
 ] as const;

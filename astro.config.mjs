@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // URL de producción — ajustar si cambia el dominio
-const SITE = 'https://ciafconsultora.com.ar';
+const SITE = 'https://camcaserviciosintegrales.com.ar';
 
 export default defineConfig({
   site: SITE,

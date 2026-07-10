@@ -1,6 +1,7 @@
 ---
-// Hero de páginas internas — estética brochure (oscuro, ribbon, Montserrat).
+// Hero de páginas internas — fondo oscuro, ribbon, tipografía condensada.
 // Opcional: panel de imagen (con fallback de gradiente on-brand) y CTAs.
+import TopoPattern from '@components/TopoPattern.astro';
 interface Cta {
   label: string;
   href: string;
@@ -19,6 +20,7 @@ const { eyebrow, title, lead, image, imageAlt = '', ctas = [] } = Astro.props;
 const hasImg = !!image;
 ---
 <section class:list={['page-hero hero-bg section--flat', { 'page-hero--media': hasImg }]}>
+  <TopoPattern class="page-hero-topo" opacity={0.08} />
   <div class="container page-hero-inner">
     <div class="page-hero-text">
       <span class="ribbon load-in">{eyebrow}</span>
@@ -51,7 +53,9 @@ const hasImg = !!image;
 </section>
 
 <style>
-  .page-hero { padding-top: calc(var(--nav-h) + var(--space-lg)); padding-bottom: var(--space-xl); border-bottom: 1px solid var(--line); }
+  .page-hero { position: relative; overflow: hidden; padding-top: calc(var(--nav-h) + var(--space-lg)); padding-bottom: var(--space-xl); border-bottom: 1px solid var(--line); }
+  .page-hero-topo { color: #fff; }
+  .page-hero-inner { position: relative; }
   .page-hero-title { margin-top: var(--space-md); max-width: 16ch; }
   .page-hero-lead { margin-top: var(--space-md); max-width: 56ch; }
   .page-hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
@@ -66,7 +70,7 @@ const hasImg = !!image;
     border-radius: var(--radius-md); overflow: hidden;
     /* La foto se dibuja arriba; si falta, queda el gradiente on-brand (sin ícono roto). */
     background-image: var(--photo, none),
-      linear-gradient(155deg, rgba(45, 108, 184, 0.55), rgba(14, 31, 51, 0.92));
+      linear-gradient(155deg, rgba(62, 154, 103, 0.55), rgba(11, 59, 36, 0.92));
     background-size: cover; background-position: center;
     box-shadow: var(--shadow-card);
   }

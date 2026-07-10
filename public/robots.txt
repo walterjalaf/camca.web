@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ciafconsultora.com.ar/sitemap-index.xml
+Sitemap: https://camcaserviciosintegrales.com.ar/sitemap-index.xml

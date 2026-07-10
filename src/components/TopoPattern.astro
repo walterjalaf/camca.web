@@ -1,0 +1,39 @@
+---
+// Textura de líneas topográficas — tomada del lenguaje visual real de CAMCA
+// (fondo de curvas de nivel usado en toda la presentación institucional).
+// Decorativa, absoluta, no interactiva.
+interface Props {
+  class?: string;
+  opacity?: number;
+}
+const { class: className = '', opacity = 0.09 } = Astro.props;
+---
+<svg
+  class:list={['topo', className]}
+  style={`--topo-opacity:${opacity}`}
+  viewBox="0 0 1200 700"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d="M-50 120 C 150 60, 300 180, 480 110 S 780 40, 950 130 S 1180 200, 1260 140" />
+  <path d="M-50 210 C 140 150, 320 260, 500 195 S 800 120, 960 220 S 1180 290, 1260 230" />
+  <path d="M-50 300 C 160 250, 300 350, 470 290 S 760 210, 940 310 S 1180 380, 1260 320" />
+  <path d="M-50 400 C 130 350, 330 460, 520 390 S 790 320, 970 420 S 1180 470, 1260 410" />
+  <path d="M-50 500 C 170 440, 310 560, 490 490 S 770 420, 950 520 S 1180 580, 1260 510" />
+  <path d="M-50 590 C 150 540, 320 650, 500 580 S 800 510, 970 610 S 1180 660, 1260 600" />
+</svg>
+
+<style>
+  .topo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    opacity: var(--topo-opacity, 0.09);
+    pointer-events: none;
+  }
+</style>

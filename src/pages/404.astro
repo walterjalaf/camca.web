@@ -3,7 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { waLink } from '@data/site';
 ---
 <BaseLayout
-  title="Página no encontrada (404) | CIAF"
+  title="Página no encontrada (404) | CAMCA"
   description="La página que buscás no existe o cambió de lugar. Volvé al inicio o escribinos."
   path="/404"
   noindex
@@ -11,7 +11,7 @@ import { waLink } from '@data/site';
   <section class="nf hero-bg section--flat">
     <div class="container nf-inner">
       <p class="nf-code font-display">404</p>
-      <h1 class="h2">Esta página no existe… pero tu próxima reunión sí.</h1>
+      <h1 class="h2">Esta página no existe… pero tu próxima cotización sí.</h1>
       <p class="nf-lead">La dirección que buscabas cambió de lugar o ya no está disponible.</p>
       <div class="nf-actions">
         <a href="/" class="btn btn--solid">Volver al inicio</a>
@@ -26,6 +26,6 @@ import { waLink } from '@data/site';
   .nf { min-height: 70vh; display: flex; align-items: center; padding-top: calc(var(--nav-h) + var(--space-lg)); }
   .nf-code { font-weight: 800; font-size: clamp(80px, 16vw, 200px); line-height: 0.9; color: var(--gold); }
   .nf-inner h1 { margin-top: var(--space-sm); max-width: 22ch; }
-  .nf-lead { margin-top: var(--space-md); color: var(--ciaf-on-navy-80); max-width: 52ch; }
+  .nf-lead { margin-top: var(--space-md); color: var(--camca-on-navy-80); max-width: 52ch; }
   .nf-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
 </style>

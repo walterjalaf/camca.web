@@ -1,8 +1,8 @@
 {
-  "name": "ciaf-web",
+  "name": "camca-web",
   "type": "module",
   "version": "1.0.0",
-  "description": "Sitio web institucional de CIAF Consultora Integral",
+  "description": "Sitio web institucional de CAMCA Servicios Integrales",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

@@ -27,18 +27,20 @@ const Tag = href ? 'a' : 'div';
 <style>
   .card {
     position: relative; display: flex; flex-direction: column; gap: 12px;
-    background: linear-gradient(180deg, rgba(30, 74, 130, 0.10), rgba(30, 74, 130, 0));
-    border: 1px solid var(--line); padding: clamp(22px, 3vw, 34px);
+    background: linear-gradient(180deg, rgba(46, 125, 83, 0.10), rgba(46, 125, 83, 0));
+    border: 1px solid var(--line); border-left: 3px solid transparent;
+    padding: clamp(22px, 3vw, 34px);
+    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
     transition: transform var(--dur-hover) var(--ease-out), border-color var(--dur-hover), background var(--dur-hover);
   }
   .card--link:hover {
-    transform: translateY(-3px); border-color: var(--line-strong);
-    background: linear-gradient(180deg, rgba(30, 74, 130, 0.22), rgba(30, 74, 130, 0.04));
+    transform: translateY(-3px); border-color: var(--line-strong); border-left-color: var(--gold);
+    background: linear-gradient(180deg, rgba(46, 125, 83, 0.22), rgba(46, 125, 83, 0.04));
   }
-  .card-eyebrow { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--ciaf-on-navy-55); }
-  .card-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: clamp(18px, 2vw, 24px); line-height: 1.05; color: #fff; }
-  .card-body { color: var(--ciaf-on-navy-60); font-size: 15px; }
-  .card-arrow { position: absolute; top: clamp(22px, 3vw, 34px); right: clamp(22px, 3vw, 34px); color: var(--ciaf-on-navy-55); opacity: 0; transform: translate(-4px, 4px); transition: opacity var(--dur-hover), transform var(--dur-hover); }
+  .card-eyebrow { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--camca-on-navy-55); }
+  .card-title { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.005em; font-size: clamp(20px, 2.2vw, 27px); line-height: 1.02; color: #fff; }
+  .card-body { color: var(--camca-on-navy-60); font-size: 15px; }
+  .card-arrow { position: absolute; top: clamp(22px, 3vw, 34px); right: clamp(22px, 3vw, 34px); color: var(--camca-on-navy-55); opacity: 0; transform: translate(-4px, 4px); transition: opacity var(--dur-hover), transform var(--dur-hover); }
   .card--link:hover .card-arrow { opacity: 1; transform: none; color: #fff; }
   /* En mobile (sin hover) la flecha queda visible para señalar que es clickable */
   @media (hover: none) { .card--link .card-arrow { opacity: 0.7; transform: none; } }

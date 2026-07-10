@@ -4,7 +4,7 @@ import PageHero from '@components/PageHero.astro';
 import { SITE, CONTACT, waLink } from '@data/site';
 
 const { lat, lng } = CONTACT.geo;
-const d = 0.006;
+const d = 0.03;
 const bbox = `${lng - d}%2C${lat - d}%2C${lng + d}%2C${lat + d}`;
 const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
 const gmaps = `https://www.google.com/maps/search/?api=1&query=${lat}%2C${lng}`;
@@ -19,17 +19,19 @@ const breadcrumb = {
 };
 ---
 <BaseLayout
-  title="Contacto — Consultora en San Juan | CIAF"
-  description="Contactá a CIAF Consultora Integral en San Juan. WhatsApp, email y formulario. Primera reunión sin costo para conocer tu operación."
+  title="Contacto — CAMCA Servicios Integrales | Calingasta, San Juan"
+  description="Contactá a CAMCA Servicios Integrales en Tamberías, Calingasta. WhatsApp, teléfono y formulario. Solicitá tu cotización para servicios sanitarios móviles."
   path="/contacto"
   jsonLd={breadcrumb}
 >
   <PageHero
     eyebrow="Contacto"
-    title="Hablemos de tu<br />próximo paso."
-    lead="Contanos qué necesita tu operación y armamos una propuesta a medida. La primera reunión es sin costo."
+    title="Hablemos de tu<br />próximo proyecto."
+    lead="Contanos sobre tu proyecto y necesidades, y armamos una propuesta a medida. Respondemos por WhatsApp, email o formulario."
+    image="/fotos/servicio-logistica.webp"
+    imageAlt="Flota 4x4 de CAMCA en operación de alta montaña"
     ctas={[
-      { label: 'Escribir por WhatsApp', href: waLink('Hola CIAF, quiero hacer una consulta'), external: true },
+      { label: 'Escribir por WhatsApp', href: waLink('Hola CAMCA, quiero hacer una consulta'), external: true },
       { label: 'Llamar ahora', href: `tel:${CONTACT.phoneTel}`, variant: 'ghost' },
     ]}
   />
@@ -38,18 +40,14 @@ const breadcrumb = {
     <div class="container contact-grid">
       <!-- Formulario -->
       <div class="form-col reveal">
-        <span class="eyebrow">// Escribinos</span>
+        <span class="eyebrow">// Solicitar cotización</span>
         <form name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form" class="contact-form" aria-describedby="form-status">
           <input type="hidden" name="form-name" value="contacto" />
           <p class="hp-field" aria-hidden="true"><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
           <div class="field">
-            <label for="nombre">Nombre *</label>
+            <label for="nombre">Nombre completo *</label>
             <input id="nombre" name="nombre" type="text" required autocomplete="name" />
-          </div>
-          <div class="field">
-            <label for="empresa">Empresa *</label>
-            <input id="empresa" name="empresa" type="text" required autocomplete="organization" />
           </div>
           <div class="field-row">
             <div class="field">
@@ -57,22 +55,40 @@ const breadcrumb = {
               <input id="email" name="email" type="email" required autocomplete="email" />
             </div>
             <div class="field">
-              <label for="telefono">Teléfono <span class="opt">(opcional)</span></label>
-              <input id="telefono" name="telefono" type="tel" autocomplete="tel" />
+              <label for="telefono">Teléfono *</label>
+              <input id="telefono" name="telefono" type="tel" required autocomplete="tel" placeholder="264-XXXXXXX" />
             </div>
           </div>
           <div class="field">
-            <label for="mensaje">Mensaje *</label>
-            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+            <label for="empresa">Empresa / Organización <span class="opt">(opcional)</span></label>
+            <input id="empresa" name="empresa" type="text" autocomplete="organization" />
           </div>
-          <button type="submit" class="btn btn--solid form-submit">Enviar mensaje</button>
+          <div class="field">
+            <label for="motivo">Motivo de consulta *</label>
+            <select id="motivo" name="motivo" required>
+              <option value="">Seleccione una opción</option>
+              <option>Alquiler de baños ecológicos</option>
+              <option>Alquiler de módulos sanitarios o habitacionales</option>
+              <option>Venta de módulos sanitarios o habitacionales</option>
+              <option>Garitas de seguridad</option>
+              <option>Mantenimiento y desagote</option>
+              <option>Desagote de biodigestores</option>
+              <option>Saneamiento para eventos</option>
+              <option>Otra consulta</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="mensaje">Mensaje *</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Cuéntenos sobre su proyecto y necesidades…"></textarea>
+          </div>
+          <button type="submit" class="btn btn--solid form-submit">Enviar consulta</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
 
       <!-- Datos -->
       <aside class="data-col reveal" data-delay="1">
-        <a href={waLink('Hola CIAF, quiero hacer una consulta')} target="_blank" rel="noopener" class="btn btn--brand wa-btn">
+        <a href={waLink('Hola CAMCA, quiero hacer una consulta')} target="_blank" rel="noopener" class="btn btn--brand wa-btn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
           Escribir por WhatsApp
         </a>
@@ -82,15 +98,17 @@ const breadcrumb = {
             <li><span class="data-label">{e.label}</span><a href={`mailto:${e.address}`}>{e.address}</a></li>
           ))}
           <li><span class="data-label">Teléfono</span><a href={`tel:${CONTACT.phoneTel}`}>{CONTACT.phoneDisplay}</a></li>
-          <li><span class="data-label">Dirección</span><address>{CONTACT.address}<br />{CONTACT.city}, {CONTACT.country}</address></li>
-          <li><span class="data-label">Redes</span><span class="data-social">
-            <a href={CONTACT.social.instagram.url} target="_blank" rel="noopener">Instagram</a>
-            <a href={CONTACT.social.linkedin.url} target="_blank" rel="noopener">LinkedIn</a>
-          </span></li>
+          <li><span class="data-label">Ubicación</span><address>{CONTACT.address}, {CONTACT.city}<br />{CONTACT.region}, {CONTACT.country}</address></li>
+          <li>
+            <span class="data-label">Horarios de atención</span>
+            <span class="data-horarios">
+              {CONTACT.horarios.map((h) => <span><strong>{h.label}:</strong> {h.value}</span>)}
+            </span>
+          </li>
         </ul>
 
         <div class="map-wrap">
-          <iframe title="Ubicación de CIAF en San Juan" src={osmEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe title="Ubicación de CAMCA en Tamberías, Calingasta" src={osmEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           <a href={gmaps} target="_blank" rel="noopener" class="map-link">Ver en Google Maps →</a>
         </div>
       </aside>
@@ -104,31 +122,32 @@ const breadcrumb = {
   .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .field { display: grid; gap: 6px; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
-  label { font-family: var(--font-display); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ciaf-on-navy-80); cursor: pointer; transition: color var(--dur-hover); }
+  label { font-family: var(--font-display); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--camca-on-navy-80); cursor: pointer; transition: color var(--dur-hover); }
   .field:focus-within label { color: #fff; }
-  .opt { color: var(--ciaf-on-navy-55); font-weight: 400; text-transform: none; }
-  input, textarea {
+  .opt { color: var(--camca-on-navy-55); font-weight: 400; text-transform: none; }
+  input, textarea, select {
     font: inherit; font-size: 16px; color: #fff;
     padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
     background: rgba(255,255,255,0.03); transition: border-color var(--dur-hover);
   }
-  input::placeholder, textarea::placeholder { color: var(--ciaf-on-navy-55); }
-  input:focus, textarea:focus { border-color: var(--brand-2); outline: none; }
+  select { color-scheme: dark; }
+  input::placeholder, textarea::placeholder { color: var(--camca-on-navy-55); }
+  input:focus, textarea:focus, select:focus { border-color: var(--brand-2); outline: none; }
   textarea { resize: vertical; }
   .form-submit { margin-top: 6px; justify-content: center; }
   .form-status { font-size: 15px; margin-top: 4px; }
-  .form-status.ok { color: #5EE3A0; font-weight: 600; }
+  .form-status.ok { color: #7ee3a8; font-weight: 600; }
   .form-status.err { color: #ff8a80; }
 
   .data-col { display: flex; flex-direction: column; gap: var(--space-md); }
   .wa-btn { justify-content: center; }
   .data-list { display: grid; gap: var(--space-sm); }
   .data-list li { display: grid; gap: 3px; padding-bottom: var(--space-sm); border-bottom: 1px solid var(--line); }
-  .data-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--ciaf-on-navy-55); }
+  .data-label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); color: var(--camca-on-navy-55); }
   .data-list a { color: #fff; font-weight: 600; }
   .data-list a:hover { color: var(--brand-2); }
-  .data-list address { font-style: normal; color: var(--ciaf-on-navy-80); }
-  .data-social { display: flex; gap: var(--space-md); }
+  .data-list address { font-style: normal; color: var(--camca-on-navy-80); }
+  .data-horarios { display: grid; gap: 2px; color: var(--camca-on-navy-80); font-size: 14px; }
 
   .map-wrap { margin-top: 4px; }
   .map-wrap iframe { width: 100%; height: 220px; border: 1px solid var(--line); border-radius: var(--radius-md); filter: grayscale(0.3) brightness(0.92); }
@@ -157,12 +176,12 @@ const breadcrumb = {
         });
         form.reset();
         status.className = 'form-status ok';
-        status.textContent = '¡Gracias! Recibimos tu mensaje y te respondemos a la brevedad.';
+        status.textContent = '¡Gracias! Recibimos tu consulta y te respondemos a la brevedad.';
       } catch {
         status.className = 'form-status err';
-        status.textContent = 'No pudimos enviar el mensaje. Escribinos por WhatsApp o email, por favor.';
+        status.textContent = 'No pudimos enviar la consulta. Escribinos por WhatsApp o email, por favor.';
       } finally {
-        if (submit) { submit.disabled = false; submit.textContent = 'Enviar mensaje'; }
+        if (submit) { submit.disabled = false; submit.textContent = 'Enviar consulta'; }
       }
     });
   }

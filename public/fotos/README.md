@@ -1,26 +1,28 @@
-# Fotos del sitio — fotos de stock (reemplazables por las tuyas)
+# Fotos del sitio — material real de CAMCA
 
-Estos archivos son **fotos de stock** (de Unsplash, libres de uso) ya optimizadas a `.webp`
-(1200×950, ~q78). Sirven para que el sitio se vea terminado. Cuando tengas fotos propias,
-reemplazá cada archivo manteniendo el **mismo nombre** y formato `.webp` (o `.jpg`, pero
-entonces actualizá la ruta en el código).
+Estos archivos son **fotos reales de CAMCA**, extraídas de la presentación institucional
+y el flyer de marca (ver [`docs/referencias/`](../../docs/referencias)), optimizadas a
+`.webp`. Si conseguís fotos nuevas de mejor calidad, reemplazá el archivo manteniendo el
+**mismo nombre**.
 
-Si borrás un archivo, no se rompe nada: el componente muestra un gradiente de marca como
-fallback. Pero lo ideal es mantener una foto real.
+Si borrás un archivo, no se rompe nada: el componente muestra un gradiente de marca
+verde/terracota como fallback. Pero lo ideal es mantener una foto real.
 
 ## Archivos esperados
 
-| Archivo | Dónde se usa | Tamaño sugerido | Sugerencia de contenido |
-|---|---|---|---|
-| `hero-home.webp` | Portada (Home), panel del hero | ~1200×1000 | Equipo trabajando / persona del equipo con un cliente |
-| `nosotros.webp` | Página Nosotros, banda "Personas que atienden a personas" | ~1200×900 | El equipo de CIAF, oficina, San Juan |
-| `industrias/gastronomia.webp` | Hero industria Gastronomía | ~1200×900 | Cocina/salón de un cliente del rubro |
-| `industrias/mineria-y-servicios.webp` | Hero industria Minería y servicios | ~1200×900 | Operación/servicios a la minería |
-| `industrias/energia.webp` | Hero industria Energía | ~1200×900 | Estación / energía |
-| `industrias/retail.webp` | Hero industria Retail | ~1200×900 | Local comercial |
-| `industrias/turismo-y-deportes.webp` | Hero industria Turismo y deportes | ~1200×900 | Turismo aventura / deporte |
-| `industrias/distribucion.webp` | Hero industria Distribución | ~1200×900 | Logística / depósito |
+| Archivo | Dónde se usa | Contenido actual |
+|---|---|---|
+| `hero-home.webp` | Portada (Home), panel del hero | Panorámica de la cordillera de Calingasta |
+| `nosotros.webp` | Página Nosotros, banda "Compromiso comunitario" | Baño ecológico + camioneta 4x4 en alta montaña |
+| `industrias/mineria.webp` | Hero industria Minería | Baño ecológico en operación minera |
+| `industrias/construccion-y-obras.webp` | Hero industria Construcción y Obras | Baño + módulo habitacional en obra |
+| `industrias/eventos-masivos.webp` | Hero industria Eventos Masivos | Baños ecológicos instalados en fila |
+| `industrias/agroindustria.webp` | Hero industria Agroindustria | Unidad + flota 4x4 en terreno rural/desértico |
+| `industrias/organismos-publicos.webp` | Hero industria Organismos Públicos | Módulo sanitario en alta montaña |
+| `industrias/empresas-privadas.webp` | Hero industria Empresas Privadas | Garita de control de acceso |
+| `servicio-banos.webp` / `servicio-modulos.webp` / `servicio-modulos-habitacionales.webp` / `servicio-garitas.webp` / `servicio-desagote.webp` | Galería en `/servicios` | Baños ecológicos, módulos sanitarios y habitacionales, garita y camión de desagote |
 
 ## Cómo optimizar antes de subir
-Pasá la foto a `.webp` (~80% calidad, ancho máx ~1400px). Podés usar el script existente
-`scripts/optimize-images.mjs` como referencia, o cualquier conversor a WebP.
+
+Pasá la foto a `.webp` (~80% calidad, ancho máx ~1600px), por ejemplo con `sharp`
+(ya es una dependencia del proyecto) o cualquier conversor a WebP.

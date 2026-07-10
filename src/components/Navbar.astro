@@ -7,7 +7,7 @@ const isActive = (href: string) =>
 ---
 <header class="site-nav no-print" id="site-nav">
   <div class="nav-inner container">
-    <a href="/" class="nav-logo" aria-label="CIAF · Inicio">
+    <a href="/" class="nav-logo" aria-label="CAMCA · Inicio">
       <Logo height={34} />
     </a>
 
@@ -31,7 +31,7 @@ const isActive = (href: string) =>
       )}
     </nav>
 
-    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid nav-cta">Agendar reunión</a>
+    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid nav-cta">Solicitar cotización</a>
 
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -42,22 +42,22 @@ const isActive = (href: string) =>
     <a href="/">Inicio</a>
     <a href="/servicios">Servicios</a>
     <div class="mobile-group-label">Industrias</div>
-    <a href="/industrias/gastronomia" class="mobile-sub">Gastronomía</a>
-    <a href="/industrias/mineria-y-servicios" class="mobile-sub">Minería y servicios</a>
-    <a href="/industrias/energia" class="mobile-sub">Energía</a>
-    <a href="/industrias/retail" class="mobile-sub">Retail</a>
-    <a href="/industrias/turismo-y-deportes" class="mobile-sub">Turismo y deportes</a>
-    <a href="/industrias/distribucion" class="mobile-sub">Distribución</a>
+    <a href="/industrias/mineria" class="mobile-sub">Minería</a>
+    <a href="/industrias/construccion-y-obras" class="mobile-sub">Construcción y obras</a>
+    <a href="/industrias/eventos-masivos" class="mobile-sub">Eventos masivos</a>
+    <a href="/industrias/agroindustria" class="mobile-sub">Agroindustria</a>
+    <a href="/industrias/organismos-publicos" class="mobile-sub">Organismos públicos</a>
+    <a href="/industrias/empresas-privadas" class="mobile-sub">Empresas privadas</a>
     <a href="/nosotros">Nosotros</a>
     <a href="/contacto">Contacto</a>
-    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid mobile-cta">Agendar reunión</a>
+    <a href={waLink()} target="_blank" rel="noopener" class="btn btn--solid mobile-cta">Solicitar cotización</a>
   </div>
 </header>
 
 <style>
   .site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h);
-    background: rgba(14, 31, 51, 0.82);
+    background: rgba(11, 59, 36, 0.82);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line); color: #fff;
   }
@@ -70,7 +70,7 @@ const isActive = (href: string) =>
   .nav-link {
     display: inline-flex; align-items: center; gap: 5px;
     font-family: var(--font-display); font-weight: 600; font-size: 13px;
-    letter-spacing: 0.04em; text-transform: uppercase; color: var(--ciaf-on-navy-80);
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--camca-on-navy-80);
     background: none; border: 0; padding: 6px 0; transition: color var(--dur-hover);
   }
   .nav-link:hover, .nav-link.is-active { color: #fff; }
@@ -88,7 +88,7 @@ const isActive = (href: string) =>
   .nav-dropdown-link {
     display: block; padding: 11px 14px; font-size: 13px; text-transform: uppercase;
     font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em;
-    color: var(--ciaf-on-navy-80); transition: background var(--dur-hover), color var(--dur-hover);
+    color: var(--camca-on-navy-80); transition: background var(--dur-hover), color var(--dur-hover);
   }
   .nav-dropdown-link:hover, .nav-dropdown-link.is-active { background: rgba(255,255,255,0.06); color: #fff; }
 
@@ -107,8 +107,8 @@ const isActive = (href: string) =>
     display: flex; flex-direction: column; max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
   }
   .mobile-menu[hidden] { display: none; }
-  .mobile-menu a { color: var(--ciaf-on-navy-80); padding: 14px 0; font-size: 15px; text-transform: uppercase; font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em; border-bottom: 1px solid var(--line); }
-  .mobile-menu a.mobile-sub { padding-left: 16px; font-size: 13px; color: var(--ciaf-on-navy-60); }
+  .mobile-menu a { color: var(--camca-on-navy-80); padding: 14px 0; font-size: 15px; text-transform: uppercase; font-family: var(--font-display); font-weight: 600; letter-spacing: 0.03em; border-bottom: 1px solid var(--line); }
+  .mobile-menu a.mobile-sub { padding-left: 16px; font-size: 13px; color: var(--camca-on-navy-60); }
   .mobile-group-label { color: var(--gold); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: var(--tracking-mega); padding: 16px 0 6px; }
   .mobile-cta { justify-content: center; margin-top: var(--space-sm); border-bottom: 0 !important; }
 

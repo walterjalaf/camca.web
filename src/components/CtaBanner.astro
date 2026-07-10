@@ -1,35 +1,38 @@
 ---
 import { CONTACT, waLink } from '@data/site';
+import TopoPattern from '@components/TopoPattern.astro';
 interface Props {
   title?: string;
   trust?: string;
   waText?: string;
 }
 const {
-  title = 'Hablemos de tu próximo paso.',
-  trust = 'Más de 30 empresas sanjuaninas ya delegaron su administración en CIAF.',
-  waText = 'Hola CIAF, quiero agendar una reunión',
+  title = 'Hablemos de tu próximo proyecto.',
+  trust = 'Soluciones sanitarias móviles para operaciones de alta exigencia en San Juan.',
+  waText = 'Hola CAMCA, quiero solicitar una cotización',
 } = Astro.props;
 ---
 <section class="cta-banner hero-bg">
+  <TopoPattern class="cta-topo" opacity={0.08} />
   <div class="container cta-inner">
     <div class="cta-text reveal">
       <h2 class="h2">{title}</h2>
       {trust && <p class="cta-trust">{trust}</p>}
     </div>
     <div class="cta-actions reveal" data-delay="1">
-      <a href={waLink(waText)} target="_blank" rel="noopener" class="btn btn--solid">Agendar reunión</a>
+      <a href={waLink(waText)} target="_blank" rel="noopener" class="btn btn--solid">Solicitar cotización</a>
       <a href={`mailto:${CONTACT.emails[0].address}`} class="btn">Enviar un email</a>
-      <p class="cta-meta">{CONTACT.address} · {CONTACT.city} · {CONTACT.phoneDisplay}</p>
+      <p class="cta-meta">{CONTACT.address}, {CONTACT.city} · {CONTACT.phoneDisplay}</p>
     </div>
   </div>
 </section>
 
 <style>
-  .cta-banner { border-top: 1px solid var(--line); padding-block: var(--section-pad-y); }
-  .cta-inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-lg); align-items: center; }
+  .cta-banner { position: relative; overflow: hidden; border-top: 1px solid var(--line); padding-block: var(--section-pad-y); }
+  .cta-topo { color: #fff; }
+  .cta-inner { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-lg); align-items: center; }
   .cta-trust { margin-top: var(--space-md); color: var(--gold); font-weight: 600; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.4; max-width: 32ch; }
   .cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; }
-  .cta-meta { width: 100%; font-family: var(--font-mono); font-size: 12px; color: var(--ciaf-on-navy-55); margin-top: 4px; }
+  .cta-meta { width: 100%; font-family: var(--font-mono); font-size: 12px; color: var(--camca-on-navy-55); margin-top: 4px; }
   @media (max-width: 820px) { .cta-inner { grid-template-columns: 1fr; gap: var(--space-md); } }
 </style>

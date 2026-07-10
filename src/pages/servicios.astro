@@ -4,7 +4,7 @@ import PageHero from '@components/PageHero.astro';
 import ServiceBlock from '@components/ServiceBlock.astro';
 import CtaBanner from '@components/CtaBanner.astro';
 import { SITE, waLink } from '@data/site';
-import { AREAS, OUTSOURCING_BENEFITS, COMPLEMENTARIOS } from '@data/servicios';
+import { AREAS, BENEFICIOS } from '@data/servicios';
 
 const breadcrumb = {
   '@context': 'https://schema.org',
@@ -17,51 +17,58 @@ const breadcrumb = {
 const service = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  serviceType: 'Outsourcing administrativo, contable, impositivo y financiero',
+  serviceType: 'Saneamiento ambiental y servicios sanitarios móviles',
   provider: { '@id': `${SITE.url}/#organization` },
-  areaServed: [{ '@type': 'City', name: 'San Juan' }, { '@type': 'Country', name: 'Argentina' }],
-  description: 'Administración, contabilidad, impuestos y finanzas como un departamento externo embebido en tu operación.',
+  areaServed: [{ '@type': 'AdministrativeArea', name: 'San Juan' }, { '@type': 'Country', name: 'Argentina' }],
+  description: 'Baños ecológicos, módulos sanitarios y habitacionales, garitas, mantenimiento y logística 4x4 para operaciones de alta exigencia.',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'Áreas de servicio',
+    name: 'Servicios',
     itemListElement: AREAS.map((a) => ({
-      '@type': 'OfferCatalog',
-      name: a.title,
-      itemListElement: a.items.map((i) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: i } })),
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: a.title, description: a.intro },
     })),
   },
 };
+
+const gallery = [
+  { src: '/fotos/servicio-banos.webp', alt: 'Baños ecológicos CAMCA', label: 'Baños Ecológicos' },
+  { src: '/fotos/servicio-modulos.webp', alt: 'Módulos sanitarios CAMCA', label: 'Módulos Sanitarios' },
+  { src: '/fotos/servicio-modulos-habitacionales.webp', alt: 'Módulo habitacional CAMCA', label: 'Módulos Habitacionales' },
+  { src: '/fotos/servicio-garitas.webp', alt: 'Garita de seguridad CAMCA', label: 'Garitas' },
+  { src: '/fotos/servicio-desagote.webp', alt: 'Camión de desagote CAMCA', label: 'Mantenimiento y Desagote' },
+];
 ---
 <BaseLayout
-  title="Servicios de outsourcing administrativo y contable | CIAF"
-  description="Administración, contabilidad, impuestos y finanzas como un departamento externo embebido en tu operación. Conocé los servicios de CIAF en San Juan."
+  title="Servicios de saneamiento ambiental y sanitarios móviles | CAMCA"
+  description="Baños ecológicos, módulos sanitarios y habitacionales, garitas, mantenimiento y logística 4x4 de alta montaña. Conocé los servicios de CAMCA en Calingasta, San Juan."
   path="/servicios"
   jsonLd={[breadcrumb, service]}
 >
   <PageHero
     eyebrow="Servicios"
-    title="Toda tu administración,<br />en un solo equipo."
-    lead="Cubrimos tu operación de punta a punta: desde el back-office del día a día y la planificación fiscal y financiera, hasta el desarrollo de software a medida y la implementación de IA — embebidos en tu negocio, como un área propia."
+    title="Soluciones sanitarias<br />para todo tipo de terreno."
+    lead="Desde el alquiler de un baño ecológico hasta el equipamiento sanitario completo de un campamento minero: cubrimos cada etapa con logística propia y flota 4x4 de alta montaña."
     ctas={[
-      { label: 'Agendar una reunión', href: waLink('Hola CIAF, quiero ver qué servicios necesita mi empresa'), external: true },
-      { label: 'Ver industrias', href: '/industrias/gastronomia', variant: 'ghost' },
+      { label: 'Solicitar cotización', href: waLink('Hola CAMCA, quiero ver qué servicios necesito'), external: true },
+      { label: 'Ver industrias', href: '/industrias/mineria', variant: 'ghost' },
     ]}
   />
 
-  <!-- Outsourcing: servicio estrella -->
+  <!-- Beneficios -->
   <section class="section">
     <div class="container">
       <div class="outs reveal">
         <div class="outs-text">
-          <span class="ribbon">Servicio estrella</span>
-          <h2 class="h2 outs-title">Outsourcing<br />Administrativo</h2>
+          <span class="ribbon">Por qué elegir CAMCA</span>
+          <h2 class="h2 outs-title">Un servicio,<br />sin sorpresas.</h2>
           <p class="lead">
-            No es tercerizar tareas: es incorporar un equipo a tu operación. Liquidamos, conciliamos,
-            presentamos y reportamos — con un equipo dedicado o por horas, según el tamaño de tu negocio.
+            No solo alquilamos equipamiento: nos ocupamos de la instalación, el mantenimiento y la
+            logística — con flota propia preparada para alta montaña.
           </p>
         </div>
         <ul class="outs-benefits">
-          {OUTSOURCING_BENEFITS.map((b) => (
+          {BENEFICIOS.map((b) => (
             <li><span class="outs-check" aria-hidden="true">→</span><span>{b}</span></li>
           ))}
         </ul>
@@ -69,34 +76,31 @@ const service = {
     </div>
   </section>
 
+  <!-- Galería -->
+  <section class="section section--flat">
+    <div class="container">
+      <div class="gallery reveal">
+        {gallery.map((g) => (
+          <figure class="gallery-item" style={`--photo:url('${g.src}')`}>
+            <img src={g.src} alt={g.alt} loading="lazy" decoding="async" />
+            <figcaption>{g.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Las áreas de servicio -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow reveal">// Seis áreas, un solo equipo</p>
+      <p class="eyebrow reveal">// Ocho servicios, un solo equipo</p>
       <div class="areas-stack">
         {AREAS.map((a, i) => <ServiceBlock area={a} index={i} />)}
       </div>
     </div>
   </section>
 
-  <!-- Complementarios -->
-  <section class="section">
-    <div class="container">
-      <div class="compl reveal">
-        <div>
-          <span class="ribbon">También te acompañamos en</span>
-          <h2 class="h2 compl-title">Servicios complementarios</h2>
-        </div>
-        <ul class="compl-list">
-          {COMPLEMENTARIOS.map((c) => (
-            <li><span class="compl-arrow" aria-hidden="true">→</span><span>{c}</span></li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <CtaBanner title="¿Listos para sacarte la administración de encima?" />
+  <CtaBanner title="¿Listos para resolver el saneamiento de tu proyecto?" />
 </BaseLayout>
 
 <style>
@@ -108,12 +112,16 @@ const service = {
   .outs-check { color: var(--gold); flex-shrink: 0; }
   @media (max-width: 820px) { .outs { grid-template-columns: 1fr; gap: var(--space-md); } }
 
-  .areas-stack { margin-top: var(--space-md); display: grid; gap: var(--space-md); }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); }
+  .gallery-item { position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line-strong); aspect-ratio: 4/3; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-item figcaption {
+    position: absolute; inset-inline: 0; bottom: 0; padding: var(--space-sm) var(--space-md);
+    background: linear-gradient(0deg, rgba(11,59,36,0.88), rgba(11,59,36,0));
+    font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
+    font-size: 14px; color: #fff;
+  }
+  @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } }
 
-  .compl { display: grid; grid-template-columns: 1fr 1.2fr; gap: var(--space-lg); align-items: center; }
-  .compl-title { margin-top: var(--space-md); }
-  .compl-list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm) var(--space-md); }
-  .compl-list li { display: flex; gap: 10px; align-items: center; font-size: 16px; padding: var(--space-sm) 0; border-bottom: 1px solid var(--line); color: var(--ciaf-on-navy-80); }
-  .compl-arrow { color: var(--ciaf-on-navy-55); flex-shrink: 0; }
-  @media (max-width: 720px) { .compl { grid-template-columns: 1fr; gap: var(--space-md); } .compl-list { grid-template-columns: 1fr; } }
+  .areas-stack { margin-top: var(--space-md); display: grid; gap: var(--space-md); }
 </style>
