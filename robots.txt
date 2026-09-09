@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://camcasoluciones.com.ar/sitemap-index.xml

@@ -1,0 +1,8 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CAMCA">
+  <rect width="240" height="240" rx="28" fill="#0B3B24"/>
+  <g transform="translate(45,58)">
+    <polygon points="75,0 140,38 75,76 10,38" fill="#9C8D7C"/>
+    <polygon points="10,38 75,76 75,150 10,112" fill="#FFFFFF"/>
+    <polygon points="140,38 75,76 75,150 140,112" fill="#2E7D53"/>
+  </g>
+</svg>
