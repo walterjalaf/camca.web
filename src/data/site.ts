@@ -38,7 +38,7 @@ export const waLink = (text = 'Hola CAMCA, quiero hacer una consulta') =>
 
 // Métricas citables
 export const STATS = [
-  { value: '+15', label: 'Años de experiencia' },
+  { value: '+4', label: 'Años de experiencia' },
   { value: '24/7', label: 'Respuesta de emergencia' },
   { value: '100%', label: 'Compromiso comunitario' },
   { value: '+50', label: 'Clientes corporativos' },

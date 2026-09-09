@@ -112,7 +112,7 @@ export const AREAS: Area[] = [
       'Disposición de efluentes conforme a normativa ambiental',
       'Coordinación con el cronograma de obra o planta',
     ],
-    image: '/fotos/servicio-desagote.webp',
+    image: '/fotos/camion-camca.webp',
   },
   {
     id: 'logistica-4x4',

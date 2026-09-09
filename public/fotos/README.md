@@ -21,6 +21,7 @@ verde/terracota como fallback. Pero lo ideal es mantener una foto real.
 | `industrias/organismos-publicos.webp` | Hero industria Organismos Públicos | Módulo sanitario en alta montaña |
 | `industrias/empresas-privadas.webp` | Hero industria Empresas Privadas | Garita de control de acceso |
 | `servicio-banos.webp` / `servicio-modulos.webp` / `servicio-modulos-habitacionales.webp` / `servicio-garitas.webp` / `servicio-desagote.webp` | Galería en `/servicios` | Baños ecológicos, módulos sanitarios y habitacionales, garita y camión de desagote |
+| `camion-camca.webp` | Galería en `/servicios` + bloque "Desagote de Biodigestores" | Camión cisterna CAMCA a color, con la marca en el tanque |
 
 ## Cómo optimizar antes de subir
 

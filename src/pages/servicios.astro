@@ -37,6 +37,7 @@ const gallery = [
   { src: '/fotos/servicio-modulos-habitacionales.webp', alt: 'Módulo habitacional CAMCA', label: 'Módulos Habitacionales' },
   { src: '/fotos/servicio-garitas.webp', alt: 'Garita de seguridad CAMCA', label: 'Garitas' },
   { src: '/fotos/servicio-desagote.webp', alt: 'Camión de desagote CAMCA', label: 'Mantenimiento y Desagote' },
+  { src: '/fotos/camion-camca.webp', alt: 'Camión cisterna CAMCA para desagote de biodigestores', label: 'Desagote de Biodigestores' },
 ];
 ---
 <BaseLayout
@@ -112,7 +113,8 @@ const gallery = [
   .outs-check { color: var(--gold); flex-shrink: 0; }
   @media (max-width: 820px) { .outs { grid-template-columns: 1fr; gap: var(--space-md); } }
 
-  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); }
+  /* 6 fotos: 3x2 en desktop, 2x3 en tablet, 1 columna en móvil — siempre filas completas */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
   .gallery-item { position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line-strong); aspect-ratio: 4/3; }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
   .gallery-item figcaption {
@@ -121,6 +123,7 @@ const gallery = [
     font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
     font-size: 14px; color: #fff;
   }
+  @media (max-width: 860px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } }
 
   .areas-stack { margin-top: var(--space-md); display: grid; gap: var(--space-md); }
