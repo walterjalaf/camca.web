@@ -91,9 +91,10 @@ hace por `fetch` y muestra un mensaje de éxito en la misma página.
 - **Hostinger (FTP):** [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
   sube `dist/` por FTP en cada push a `main`. Requiere los secrets `FTP_SERVER`,
   `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_SERVER_DIR` en GitHub.
-- El dominio `camcaserviciosintegrales.com.ar` usado en `astro.config.mjs` y
-  `public/robots.txt` es un **placeholder** — actualizalo cuando el dominio real esté
-  definido.
+- El dominio de producción es `camcasoluciones.com.ar`. Está en `astro.config.mjs`,
+  `src/data/site.ts`, `public/robots.txt` y `scripts/gen-og.mjs` (queda escrito dentro
+  de la imagen OG). Si alguna vez cambia, actualizá los cuatro y volvé a correr
+  `node scripts/gen-og.mjs`.
 
 ## SEO
 

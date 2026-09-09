@@ -5,8 +5,8 @@
 export const SITE = {
   name: 'CAMCA Servicios Integrales',
   shortName: 'CAMCA',
-  domain: 'camcaserviciosintegrales.com.ar',
-  url: 'https://camcaserviciosintegrales.com.ar',
+  domain: 'camcasoluciones.com.ar',
+  url: 'https://camcasoluciones.com.ar',
   claim: 'Soluciones rápidas y responsables en todo tipo de terrenos.',
   tagline: 'Referentes en saneamiento ambiental de alta montaña',
   locale: 'es-AR',

@@ -40,7 +40,7 @@ const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http:/
   <text x="86" y="350" font-family="Arial, sans-serif" font-weight="800" font-size="66" fill="${WHITE}">Soluciones sanitarias</text>
   <text x="86" y="424" font-family="Arial, sans-serif" font-weight="800" font-size="66" fill="${WHITE}">de alta montaña.</text>
   <rect x="90" y="452" width="360" height="6" fill="${GOLD}"/>
-  <text x="92" y="520" font-family="Arial, sans-serif" font-size="22" fill="#FFFFFF" fill-opacity="0.6">camcaserviciosintegrales.com.ar</text>
+  <text x="92" y="520" font-family="Arial, sans-serif" font-size="22" fill="#FFFFFF" fill-opacity="0.6">camcasoluciones.com.ar</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile(out);
