@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="es"> <head><meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src https://www.openstreetmap.org; upgrade-insecure-requests; script-src 'self' 'sha256-MBvC6AvEPNPSjpINp/RW8C1fk8s2ixSEZaKco42xn5c=' 'sha256-SWy10KABNSoUBM56sMx7W0Dwmq1UxIb3Fb+xtZWUmc0=' 'sha256-ZokZaFkyodvO0yVfLZxWa4ZtqBlNl8hYecn/fwbTNFM='"><meta charset="utf-8"><!-- viewport-fit=cover para respetar el notch en modo standalone --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#0B3B24"><title>Entrar · CAMCA</title><link rel="manifest" href="/app/manifest.webmanifest"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/app/icono-180.png"><!-- El estandar actual; apple-* se mantiene por iOS viejo, que todavia
+         puede estar en la mano de un chofer. --><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="CAMCA Campo"><!-- Las fuentes ya estan self-hosted: se precargan para que la app no
+         abra en Times New Roman cuando arranca sin senial. --><link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/bigshoulders.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/_astro/campo.1lWgbNaO.css"></head> <body> <div class="app-shell"> <header class="app-barra"> <div class="app-barra-inner"> <span class="app-logo"><svg viewBox="0 0 210 64" height="26" width="85.3125" class role="img" aria-label="CAMCA · Servicios Integrales"><g transform="translate(0,0)"><polygon points="32,2 60,16 32,30 4,16" fill="var(--camca-cube-top, #9C8D7C)"></polygon><polygon points="4,16 32,30 32,60 4,46" fill="var(--camca-cube-left, #FFFFFF)"></polygon><polygon points="60,16 32,30 32,60 60,46" fill="var(--camca-cube-face, #2E7D53)"></polygon></g><text x="76" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="3" fill="currentColor">CAMCA</text></svg></span> <h1>Entrar</h1> <span class="app-estado" id="app-estado" data-estado="sin-red" role="status">sin red</span> </div> </header> <main class="app-main">  <noscript> <div class="app-tarjeta"> <p class="app-titulo">Hace falta JavaScript</p> <p class="app-nota">
+La app de campo guarda el trabajo en el teléfono para poder funcionar sin señal.
+        Activá JavaScript en el navegador para usarla.
+</p> </div> </noscript>  <div class="app-tarjeta" id="aviso-instalar" hidden> <p class="app-titulo">Instalá la app antes de salir</p> <p class="app-nota">
+Agregala a la pantalla de inicio. Si empezás la jornada desde el navegador
+      y después instalás el ícono, el trabajo no se traslada solo.
+</p> <button class="app-btn" id="btn-instalar" type="button" style="margin-top:12px">Instalar</button> </div>  <section class="app-tarjeta" id="pantalla-enrolar" hidden> <p class="app-titulo">Activar este teléfono</p> <p class="app-nota">
+Pedile el código a quien coordina. Son 8 caracteres y se puede dictar por teléfono.
+</p> <form id="form-enrolar" style="margin-top:14px; display:grid; gap:14px"> <div class="app-campo"> <label for="codigo">Código</label> <input id="codigo" name="codigo" type="text" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX" maxlength="9" required> </div> <div class="app-campo"> <label for="pin-nuevo">Elegí tu PIN (6 números)</label> <input id="pin-nuevo" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="new-password" maxlength="6" class="app-pin" required> </div> <div class="app-campo"> <label for="pin-repetir">Repetilo</label> <input id="pin-repetir" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="new-password" maxlength="6" class="app-pin" required> </div> <p class="app-nota" id="error-enrolar" role="alert" style="color:var(--app-error)"></p> <button class="app-btn app-btn--principal" type="submit">Activar</button> </form> </section>  <section class="app-tarjeta" id="pantalla-pin" hidden> <p class="app-titulo" id="saludo">Entrar</p> <p class="app-nota" id="aviso-offline" hidden>
+Sin señal. Podés entrar igual y trabajar: lo que cargues se envía solo cuando haya cobertura.
+</p> <form id="form-pin" style="margin-top:14px; display:grid; gap:14px"> <div class="app-campo"> <label for="pin">Tu PIN</label> <input id="pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="current-password" maxlength="6" class="app-pin" required autofocus> </div> <p class="app-nota" id="error-pin" role="alert" style="color:var(--app-error)"></p> <button class="app-btn app-btn--principal" type="submit">Entrar</button> </form> <!-- Pendientes sin sincronizar. No se puede descartar: mientras haya
+         evidencia solo adentro del telefono, se ve. --> <div class="app-pendientes" id="aviso-pendientes" hidden style="margin-top:14px"></div> <button class="app-btn app-btn--peligro" id="btn-otro-telefono" type="button" style="margin-top:14px">
+Usar otro código
+</button> <!-- La confirmacion vive en la pantalla, no en un confirm() nativo. Un
+         dialogo del sistema congela el hilo, se lee distinto en cada telefono
+         y —lo que importa aca— no puede decir CUANTO trabajo sin enviar hay
+         ni que no se borra. Esta decision la toma alguien parado al lado de
+         la camioneta: tiene que poder leerla. --> <div class="aviso aviso--bloqueo" id="confirmar-otro" role="alertdialog" aria-labelledby="confirmar-otro-texto" hidden style="margin-top:12px"> <span id="confirmar-otro-icono"></span> <div> <span id="confirmar-otro-texto"></span> <div class="confirmar-acciones"> <button class="app-btn app-btn--peligro" id="btn-otro-si" type="button">Sí, usar otro código</button> <button class="app-btn" id="btn-otro-no" type="button">Cancelar</button> </div> </div> </div> </section>  <section class="app-tarjeta" id="pantalla-oficina" hidden> <p class="app-titulo">Entrar a la oficina</p> <p class="app-nota">Para coordinación y administración.</p> <form id="form-oficina" style="margin-top:14px; display:grid; gap:14px"> <div class="app-campo"> <label for="email">Email</label> <input id="email" name="email" type="email" autocomplete="username" required> </div> <div class="app-campo"> <label for="clave">Contraseña</label> <input id="clave" name="clave" type="password" autocomplete="current-password" required> </div> <p class="app-nota" id="error-oficina" role="alert" style="color:var(--app-error)"></p> <button class="app-btn app-btn--principal" type="submit">Entrar</button> </form> </section>  <section class="app-tarjeta" id="cambiar-modo" hidden> <button class="app-btn" id="btn-modo" type="button">Entrar a la oficina</button> </section> <section class="app-tarjeta" id="pantalla-cargando"> <p class="app-nota">Abriendo…</p> </section>  </main> <footer class="app-pie">
+CAMCA · Plataforma de operaciones
+<span id="app-version" data-build=""></span> </footer> </div> <!-- El service worker se registra inline y con is:inline: su URL tiene que
+         ser estable y estar en la raiz de /app/ para que el scope alcance a
+         toda la app. --> <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' })
+            .then((reg) => {
+              // NO se activa la version nueva sola: cambiar la app abajo de los
+              // pies del chofer a mitad de jornada le hace perder el hilo. Se
+              // activa cuando la pantalla dice que es seguro.
+              window.__camcaSW = reg;
+              if (reg.waiting) {
+                window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+              }
+              reg.addEventListener('updatefound', () => {
+                const nuevo = reg.installing;
+                if (!nuevo) return;
+                nuevo.addEventListener('statechange', () => {
+                  if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                    window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+                  }
+                });
+              });
+            })
+            .catch((e) => console.warn('[camca] no se pudo registrar el service worker', e));
+        });
+      }
+    </script> <script type="module">const d=document.getElementById("app-estado");function n(t,e){d&&(d.dataset.estado=t,d.textContent=e)}window.addEventListener("offline",()=>n("sin-red","sin red"));window.addEventListener("online",()=>n("enviando","reconectando"));window.addEventListener("camca:estado",t=>{const e=t.detail??{};n(e.estado??"sin-red",e.texto??"sin red")});navigator.onLine||n("sin-red","sin red");</script> </body> </html> <!--
+  is:inline es OBLIGATORIO acá. Sin él, Astro manda este script al bundler,
+  que intenta resolver /app/js/entrar.js dentro de src/ y rompe el build
+  (public/ no es un módulo que Rollup pueda resolver).
+
+  Y aunque resolviera, no serviría: el bundler le pondría un hash distinto en
+  cada build, y el service worker precachea por URL. Los módulos de la app
+  necesitan URLs ESTABLES para poder cachearse por nombre.
+--> <script type="module">
+  import('/app/js/entrar.js').catch((e) => {
+    console.error('[camca] no se pudo cargar entrar.js', e);
+    const cargando = document.getElementById('pantalla-cargando');
+    if (cargando) {
+      cargando.innerHTML =
+        '<p class="app-titulo">No se pudo abrir</p>' +
+        '<p class="app-nota">Cerrá la app y volvé a abrirla. Si sigue igual, avisá a coordinación.</p>';
+    }
+  });
+</script>

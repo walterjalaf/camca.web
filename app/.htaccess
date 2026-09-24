@@ -1,0 +1,54 @@
+# ============================================================
+# CAMCA · App de campo — .htaccess SCOPED.
+# Nunca se despliega uno en la raiz del docroot: hPanel administra ese archivo
+# (selector de version de PHP, HTTPS) y pisarlo puede hacer que el servidor
+# sirva el codigo PHP en texto plano.
+# ============================================================
+
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow"
+
+  # El service worker NUNCA se cachea. Si se cachea, la app queda clavada en
+  # una version vieja y no hay forma de actualizarla a distancia.
+  <FilesMatch "sw\.js$">
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Service-Worker-Allowed "/app/"
+  </FilesMatch>
+
+  # build.json decide que se precachea: si se sirviera cacheado, el service
+  # worker instalaria la lista del build anterior.
+  <FilesMatch "^(build\.json|manifest\.webmanifest)$">
+    Header always set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Los modulos de la app tienen URL ESTABLE (sin hash) a proposito, para que
+  # el service worker pueda precachearlos por nombre. Por eso NO pueden ser
+  # immutable: la invalidacion la hace el nombre de la cache, no la URL.
+  <FilesMatch "\.(js|css)$">
+    Header always set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # El GPS del telefono es imprescindible para el auto-tildado.
+  Header always set Permissions-Policy "geolocation=(self), camera=(self), microphone=()"
+
+  # CLICKJACKING. Esta es la pantalla con el login por PIN y la captura de
+  # firma del cliente: embebida en un marco ajeno, alguien puede superponer su
+  # propia interfaz y cosechar PIN o firmas.
+  #
+  # Va como CABECERA porque el <meta> que escribe postbuild NO alcanza: el
+  # navegador IGNORA frame-ancestors, report-uri y sandbox cuando la politica
+  # viene por meta, y X-Frame-Options no se puede expresar por meta. Las dos
+  # cosas conviven: el meta trae los hashes de los scripts de cada pagina,
+  # esta cabecera trae lo que el meta no puede decir.
+  Header always set Content-Security-Policy "frame-ancestors 'none'"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "no-referrer"
+</IfModule>
+
+# Leaflet y las fuentes llevan la version en la ruta: esos si son inmutables.
+<IfModule mod_headers.c>
+  <FilesMatch "^(leaflet|.*\.woff2)">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

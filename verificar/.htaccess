@@ -1,0 +1,21 @@
+# /verificar/ — verificacion publica de remitos (F2.4).
+#
+# Scoped a esta carpeta, como los de /app/ y /api/: el .htaccess de la RAIZ
+# lo administra hPanel y no se despliega nunca (ver guard.mjs).
+
+# /verificar/XXXXX-XXXXX lleva a la misma pagina: el codigo lo lee el JS de
+# la direccion. El QR usa ?c= y funciona aunque esto no este.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^[0-9A-Za-z-]{10,13}/?$ index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Cada resultado es de un papel concreto: no se indexa.
+  Header always set X-Robots-Tag "noindex, nofollow"
+  # El codigo va en la direccion. Sin esto, tocar cualquier enlace de la
+  # pagina (el de WhatsApp, por ejemplo) se lo manda a ese sitio en el Referer.
+  Header always set Referrer-Policy "no-referrer"
+  Header always set Cache-Control "no-store"
+</IfModule>

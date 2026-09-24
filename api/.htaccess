@@ -1,0 +1,49 @@
+# ============================================================
+# CAMCA · API — .htaccess SCOPED.
+#
+# Este es el unico .htaccess que se despliega junto a la API.
+# NUNCA se despliega uno en la raiz del docroot: ahi hPanel escribe
+# el selector de version de PHP y el forzado de HTTPS, y pisarlo
+# puede hacer que el servidor devuelva el CODIGO PHP en texto plano.
+# ============================================================
+
+Options -Indexes -MultiViews
+
+# Todo entra por el front controller. Ojo: SIN la condicion "!-f".
+# Con ella, cualquier .php suelto (los de cli/) seria alcanzable
+# directo por HTTP, sin bootstrap, sin sesion y sin rate limit.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /api/
+  RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Respuestas de API: nunca cacheadas, ni por el navegador ni por hcdn.
+  Header always set Cache-Control "no-store, no-cache, must-revalidate"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Robots-Tag "noindex, nofollow"
+  Header always set Referrer-Policy "no-referrer"
+  # La API es same-origin: si algo dejo un CORS abierto, se lo saca aca.
+  Header always unset Access-Control-Allow-Origin
+
+  # CLICKJACKING. Ninguna respuesta de la API se embebe en un marco, nunca.
+  # Va como CABECERA y no en un <meta>: frame-ancestors es una de las
+  # directivas que el navegador IGNORA cuando viene por meta, y
+  # X-Frame-Options no se puede expresar por meta en absoluto.
+  # default-src 'none' cubre script-src, que es la directiva que importa en un
+  # endpoint que devuelve JSON. style-src va aparte y con 'unsafe-inline'
+  # porque GET /registro/{id}?formato=html sale por aca y lleva su <style>
+  # adentro: sin esta excepcion el R23/R28 se imprimia SIN NINGUN estilo —sin
+  # las medidas en centimetros, sin el A4, sin la marca de BORRADOR— que es
+  # justo lo contrario de lo que ese documento promete.
+  #
+  # Se afloja UNA directiva, no la politica. Los scripts siguen prohibidos.
+  Header always set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  Header always set X-Frame-Options "DENY"
+</IfModule>
+
+# Defensa en profundidad: si mod_rewrite se cayera, estos no se sirven igual.
+<FilesMatch "\.(sql|ini|log|md|json|pem|key)$">
+  Require all denied
+</FilesMatch>

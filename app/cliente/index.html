@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="es"> <head><meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src https://www.openstreetmap.org; upgrade-insecure-requests; script-src 'self' 'sha256-Jmc92vDK/kjfrRCqxas68aE9r3u9E0rEVvv1h1LhcoM=' 'sha256-SWy10KABNSoUBM56sMx7W0Dwmq1UxIb3Fb+xtZWUmc0=' 'sha256-ZokZaFkyodvO0yVfLZxWa4ZtqBlNl8hYecn/fwbTNFM='"><meta charset="utf-8"><!-- viewport-fit=cover para respetar el notch en modo standalone --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#0B3B24"><title>Portal de clientes · CAMCA</title><link rel="manifest" href="/app/manifest.webmanifest"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/app/icono-180.png"><!-- El estandar actual; apple-* se mantiene por iOS viejo, que todavia
+         puede estar en la mano de un chofer. --><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="CAMCA Campo"><!-- Las fuentes ya estan self-hosted: se precargan para que la app no
+         abra en Times New Roman cuando arranca sin senial. --><link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/bigshoulders.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/_astro/campo.1lWgbNaO.css">
+<style>.portal-cabeza{display:flex;gap:12px 24px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.portal-cabeza>div{max-width:70ch}.portal-salir{width:auto;min-width:0}.portal-acciones{display:flex;gap:6px}.portal-acciones .app-btn{width:auto;min-width:0;min-height:40px;padding:6px 12px;font-size:13.5px}.portal-desvios{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}.portal-desvios li{border-top:1px solid var(--app-borde);padding-top:8px;font-size:15px}@media(max-width:640px){.tabla.portal-tabla{min-width:0}.tabla.portal-tabla thead{display:none}.tabla.portal-tabla,.tabla.portal-tabla tbody{display:block}.tabla.portal-tabla tr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;grid-template-areas:"num fecha" "sitio sitio" "estado estado" "acc acc";padding:12px 0;border-bottom:1px solid var(--app-linea)}.tabla.portal-tabla td{display:block;padding:0;border:0}.tabla.portal-tabla .pt-fecha{grid-area:fecha;text-align:right}.tabla.portal-tabla .pt-num{grid-area:num}.tabla.portal-tabla .pt-sitio{grid-area:sitio}.tabla.portal-tabla .pt-estado{grid-area:estado}.tabla.portal-tabla .pt-acc{grid-area:acc}.tabla.portal-tabla .portal-acciones .app-btn{flex:1;min-height:44px}}
+</style></head> <body> <div class="app-shell"> <header class="app-barra"> <div class="app-barra-inner"> <span class="app-logo"><svg viewBox="0 0 210 64" height="26" width="85.3125" class role="img" aria-label="CAMCA · Servicios Integrales"><g transform="translate(0,0)"><polygon points="32,2 60,16 32,30 4,16" fill="var(--camca-cube-top, #9C8D7C)"></polygon><polygon points="4,16 32,30 32,60 4,46" fill="var(--camca-cube-left, #FFFFFF)"></polygon><polygon points="60,16 32,30 32,60 60,46" fill="var(--camca-cube-face, #2E7D53)"></polygon></g><text x="76" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="3" fill="currentColor">CAMCA</text></svg></span> <h1>Portal de clientes</h1> <span class="app-estado" id="app-estado" data-estado="sin-red" role="status">sin red</span> </div> </header> <main class="app-main">  <section class="app-tarjeta tarjeta-filtro portal-cabeza"> <div> <p class="app-titulo" id="portal-cliente">Tus servicios</p> <p class="app-nota">Los remitos de los últimos seis meses. Los certificados se pueden verificar desde el código QR del papel o en camcasoluciones.com.ar/verificar.</p> </div> <button class="app-btn portal-salir" type="button" id="portal-salir">Salir</button> </section> <section class="app-tarjeta tarjeta-filtro"> <p class="app-titulo">Remitos</p> <div id="portal-remitos"><p class="app-nota">Cargando…</p></div> <p class="trabajo-error" id="portal-error" role="alert" hidden></p> </section> <section class="app-tarjeta"> <p class="app-titulo">Desvíos en tus sitios</p> <p class="app-nota">Últimos 90 días: lo que no salió como estaba planificado, con el motivo cuando lo hay.</p> <div id="portal-desvios"></div> </section>  </main> <footer class="app-pie">
+CAMCA · Plataforma de operaciones
+<span id="app-version" data-build=""></span> </footer> </div> <!-- El service worker se registra inline y con is:inline: su URL tiene que
+         ser estable y estar en la raiz de /app/ para que el scope alcance a
+         toda la app. --> <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' })
+            .then((reg) => {
+              // NO se activa la version nueva sola: cambiar la app abajo de los
+              // pies del chofer a mitad de jornada le hace perder el hilo. Se
+              // activa cuando la pantalla dice que es seguro.
+              window.__camcaSW = reg;
+              if (reg.waiting) {
+                window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+              }
+              reg.addEventListener('updatefound', () => {
+                const nuevo = reg.installing;
+                if (!nuevo) return;
+                nuevo.addEventListener('statechange', () => {
+                  if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                    window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+                  }
+                });
+              });
+            })
+            .catch((e) => console.warn('[camca] no se pudo registrar el service worker', e));
+        });
+      }
+    </script> <script type="module">const d=document.getElementById("app-estado");function n(t,e){d&&(d.dataset.estado=t,d.textContent=e)}window.addEventListener("offline",()=>n("sin-red","sin red"));window.addEventListener("online",()=>n("enviando","reconectando"));window.addEventListener("camca:estado",t=>{const e=t.detail??{};n(e.estado??"sin-red",e.texto??"sin red")});navigator.onLine||n("sin-red","sin red");</script> </body> </html>  <script type="module">
+  import('/app/js/cliente.js').catch((e) => {
+    console.error('[camca] no se pudo cargar cliente.js', e);
+    document.getElementById('portal-remitos').innerHTML = '<p class="app-nota">No se pudo abrir el portal. Recargá la página.</p>';
+  });
+</script>

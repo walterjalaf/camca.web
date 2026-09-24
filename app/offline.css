@@ -1,0 +1,18 @@
+/* Hoja propia y minima: offline.html es el ultimo recurso y no puede depender
+   de que app.css haya llegado a cachearse. */
+:root { color-scheme: light; }
+body {
+  margin: 0; min-height: 100dvh; display: grid; place-items: center;
+  background: #F7F5F0; color: #17201b;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 24px;
+}
+.caja { max-width: 420px; background: #fff; border: 1px solid #ded8cd; border-radius: 10px; padding: 22px; }
+h1 { font-family: 'Big Shoulders', system-ui, sans-serif; text-transform: uppercase; font-size: 24px; margin: 0 0 10px; color: #0B3B24; }
+p { font-size: 16px; line-height: 1.5; margin: 0 0 12px; }
+.tranquilo { background: #eef7f2; border: 1px solid #bfe0d0; border-radius: 8px; padding: 12px; }
+.boton {
+  display: block; text-align: center; margin-top: 16px; min-height: 48px; line-height: 48px;
+  background: #0B3B24; color: #fff; text-decoration: none; border-radius: 10px;
+  font-family: 'Big Shoulders', system-ui, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+}

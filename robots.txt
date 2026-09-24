@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# La API nunca se rastrea.
+Disallow: /api/
+
+# OJO: /app/ NO lleva Disallow a proposito. Bloquear el rastreo impediria
+# que el robot LEA el <meta name="robots" content="noindex">, y la ruta
+# quedaria indexada para siempre por los enlaces que la apunten.
+# El noindex lo pone AppLayout.astro y lo refuerza el header X-Robots-Tag.
+
 Sitemap: https://camcasoluciones.com.ar/sitemap-index.xml

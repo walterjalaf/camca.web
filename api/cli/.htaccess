@@ -1,0 +1,3 @@
+# La libreria nunca se sirve por HTTP. Doble candado: este Require y la
+# constante CAMCA_BOOT que cada archivo comprueba en su primera linea.
+Require all denied

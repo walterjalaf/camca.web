@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="es"> <head><meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; img-src 'self' data: blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src https://www.openstreetmap.org; upgrade-insecure-requests; script-src 'self' 'sha256-1sKRgqhXG46ruRxpbdH1KpiVAWktX22ZUVmBDCJlJAE=' 'sha256-SWy10KABNSoUBM56sMx7W0Dwmq1UxIb3Fb+xtZWUmc0=' 'sha256-ZokZaFkyodvO0yVfLZxWa4ZtqBlNl8hYecn/fwbTNFM='"><meta charset="utf-8"><!-- viewport-fit=cover para respetar el notch en modo standalone --><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#0B3B24"><title>Puesta en marcha · CAMCA</title><link rel="manifest" href="/app/manifest.webmanifest"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/app/icono-180.png"><!-- El estandar actual; apple-* se mantiene por iOS viejo, que todavia
+         puede estar en la mano de un chofer. --><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="CAMCA Campo"><!-- Las fuentes ya estan self-hosted: se precargan para que la app no
+         abra en Times New Roman cuando arranca sin senial. --><link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/bigshoulders.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/_astro/campo.1lWgbNaO.css">
+<style>.ins-form{display:grid;gap:14px;margin-top:12px;max-width:520px}.ins-form .app-campo{margin:0}.ins-requisitos{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}.ins-requisitos li{display:flex;gap:8px;align-items:center;font-size:15px}.ins-codigo{font-family:var(--font-mono, monospace);font-size:13px;background:var(--app-sup-2);border:1px solid var(--app-borde);border-radius:var(--app-radio);padding:10px 12px;overflow-x:auto;white-space:pre;margin:8px 0 14px;user-select:all}
+</style></head> <body> <div class="app-shell"> <header class="app-barra"> <div class="app-barra-inner"> <span class="app-logo"><svg viewBox="0 0 210 64" height="26" width="85.3125" class role="img" aria-label="CAMCA · Servicios Integrales"><g transform="translate(0,0)"><polygon points="32,2 60,16 32,30 4,16" fill="var(--camca-cube-top, #9C8D7C)"></polygon><polygon points="4,16 32,30 32,60 4,46" fill="var(--camca-cube-left, #FFFFFF)"></polygon><polygon points="60,16 32,30 32,60 60,46" fill="var(--camca-cube-face, #2E7D53)"></polygon></g><text x="76" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="3" fill="currentColor">CAMCA</text></svg></span> <h1>Puesta en marcha</h1> <span class="app-estado" id="app-estado" data-estado="sin-red" role="status">sin red</span> </div> </header> <main class="app-main">  <section class="app-tarjeta tarjeta-filtro" id="ins-estado"> <p class="app-titulo">Puesta en marcha de la plataforma</p> <p class="app-nota">Revisando el servidor…</p> </section> <section class="app-tarjeta" id="ins-formulario" hidden> <p class="app-titulo">Datos</p> <form id="ins-form" class="ins-form"> <div class="app-campo"> <label for="ins-token">Token de instalación</label> <input id="ins-token" type="password" autocomplete="off" spellcheck="false" required> </div> <p class="app-nota">La base se crea antes en hPanel → Bases de datos → MySQL. Acá van sus tres datos.</p> <div class="app-campo"><label for="ins-db-nombre">Nombre de la base</label><input id="ins-db-nombre" autocomplete="off" spellcheck="false" required></div> <div class="app-campo"><label for="ins-db-usuario">Usuario de la base</label><input id="ins-db-usuario" autocomplete="off" spellcheck="false" required></div> <div class="app-campo"><label for="ins-db-clave">Contraseña de la base</label><input id="ins-db-clave" type="password" autocomplete="off"></div> <p class="app-nota">El primer administrador de la plataforma.</p> <div class="app-campo"><label for="ins-nombre">Nombre y apellido</label><input id="ins-nombre" autocomplete="name" required></div> <div class="app-campo"><label for="ins-email">Email</label><input id="ins-email" type="email" autocomplete="username" required></div> <div class="app-campo"><label for="ins-clave">Contraseña (12 caracteres o más)</label><input id="ins-clave" type="password" autocomplete="new-password" required></div> <div class="app-campo"><label for="ins-repetir">Repetila</label><input id="ins-repetir" type="password" autocomplete="new-password" required></div> <p class="trabajo-error" id="ins-error" role="alert" hidden></p> <button class="app-btn app-btn--principal" type="submit" id="ins-enviar">Instalar</button> </form> </section> <section class="app-tarjeta" id="ins-listo" hidden></section>  </main> <footer class="app-pie">
+CAMCA · Plataforma de operaciones
+<span id="app-version" data-build=""></span> </footer> </div> <!-- El service worker se registra inline y con is:inline: su URL tiene que
+         ser estable y estar en la raiz de /app/ para que el scope alcance a
+         toda la app. --> <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' })
+            .then((reg) => {
+              // NO se activa la version nueva sola: cambiar la app abajo de los
+              // pies del chofer a mitad de jornada le hace perder el hilo. Se
+              // activa cuando la pantalla dice que es seguro.
+              window.__camcaSW = reg;
+              if (reg.waiting) {
+                window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+              }
+              reg.addEventListener('updatefound', () => {
+                const nuevo = reg.installing;
+                if (!nuevo) return;
+                nuevo.addEventListener('statechange', () => {
+                  if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                    window.dispatchEvent(new CustomEvent('camca:actualizacion-lista'));
+                  }
+                });
+              });
+            })
+            .catch((e) => console.warn('[camca] no se pudo registrar el service worker', e));
+        });
+      }
+    </script> <script type="module">const d=document.getElementById("app-estado");function n(t,e){d&&(d.dataset.estado=t,d.textContent=e)}window.addEventListener("offline",()=>n("sin-red","sin red"));window.addEventListener("online",()=>n("enviando","reconectando"));window.addEventListener("camca:estado",t=>{const e=t.detail??{};n(e.estado??"sin-red",e.texto??"sin red")});navigator.onLine||n("sin-red","sin red");</script> </body> </html>  <script type="module">
+  import('/app/js/instalar.js').catch((e) => {
+    console.error('[camca] no se pudo cargar instalar.js', e);
+  });
+</script>
